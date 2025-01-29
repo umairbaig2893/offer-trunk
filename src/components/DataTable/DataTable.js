@@ -129,7 +129,7 @@ const DataTable = ({ activeTab, filteredData }) => {
                   className={`border-b transition-all duration-300 hover:bg-[#E1D7C6]`}
                 >
                   <td className="p-4 flex items-center space-x-2">
-                    <Link href={`/offer/${slug}`} passHref>
+                    {/* <Link href={`/offer/${slug}`} passHref>
                       <div className="flex items-center w-full cursor-pointer">
                         <Image
                           src={
@@ -145,6 +145,22 @@ const DataTable = ({ activeTab, filteredData }) => {
                         />
                         {item.name}
                       </div>
+                    </Link> */}
+                    <Link href={`/offer/${slug}`} legacyBehavior>
+                      <a className="flex items-center w-full">
+                        <Image
+                          src={
+                            offer.img
+                              ? `https://api.offertrunk.com/images/${item.img}`
+                              : "https://via.placeholder.com/70"
+                          }
+                          alt={`Offer: ${item.name}`}
+                          width={50}
+                          height={50}
+                          className="mr-2 rounded-lg"
+                        />
+                        {item.name}
+                      </a>
                     </Link>
                   </td>
                   {activeTab === "offers" && (
