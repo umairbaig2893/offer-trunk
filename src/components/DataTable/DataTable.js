@@ -150,7 +150,7 @@ const DataTable = ({ activeTab, filteredData }) => {
                       <a className="flex items-center w-full">
                         <Image
                           src={
-                            offer.img
+                            item.img
                               ? `https://api.offertrunk.com/images/${item.img}`
                               : "https://via.placeholder.com/70"
                           }
