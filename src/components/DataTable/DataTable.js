@@ -50,8 +50,10 @@
 
 // export default DataTable;
 
+import Link from "next/link";
 import { useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import Image from "next/image";
 
 const DataTable = ({ activeTab, filteredData }) => {
   const itemsPerPage = 10;
@@ -89,6 +91,12 @@ const DataTable = ({ activeTab, filteredData }) => {
     }
     return pages;
   };
+  const createSlug = (name) => {
+    return name
+      .toLowerCase()
+      .replace(/[^\w\s]/gi, "")
+      .replace(/\s+/g, "-");
+  };
 
   return (
     <div className="p-4">
@@ -111,36 +119,48 @@ const DataTable = ({ activeTab, filteredData }) => {
         </thead>
         <tbody>
           {currentData.length > 0 ? (
-            currentData.map((item, index) => (
-              <tr
-                key={index}
-                className={`border-b transition-all duration-300 ${
-                  index % 2 === 0 ? "bg-gray-100" : "bg-white"
-                } hover:bg-[#E1D7C6]`}
-              >
-                <td className="p-4 flex items-center space-x-2">
-                  {item.img && (
-                    <img
-                      src={`https://api.offertrunk.com/uploads/${item?.img}`}
-                      className="w-10 h-10 rounded-full"
-                      alt="Offer"
-                    />
-                  )}
-                  <span>{item.name}</span>
-                </td>
-                {activeTab === "offers" && (
-                  <td className="p-4 text-center">${item.payout}</td>
-                )}
-                {activeTab !== "traffic" && (
-                  <td className="p-4 text-center">
-                    {item.network_name || "-"}
+            currentData.map((item, index) => {
+              // Create slug inside the map callback
+              const slug = createSlug(item.name);
+
+              return (
+                <tr
+                  key={index}
+                  className={`border-b transition-all duration-300 hover:bg-[#E1D7C6]`}
+                >
+                  <td className="p-4 flex items-center space-x-2">
+                    <Link href={`/offer/${slug}`} passHref>
+                      <div className="flex items-center w-full cursor-pointer">
+                        <Image
+                          src={
+                            item.img
+                              ? `https://api.offertrunk.com/images/${item.img}`
+                              : "https://via.placeholder.com/300"
+                          }
+                          alt={item.name}
+                          width={60}
+                          height={40}
+                          className="rounded-lg mr-4"
+                          objectFit="cover"
+                        />
+                        {item.name}
+                      </div>
+                    </Link>
                   </td>
-                )}
-                {activeTab !== "networks" && (
-                  <td className="p-4 text-center">{item.geo || "-"}</td>
-                )}
-              </tr>
-            ))
+                  {activeTab === "offers" && (
+                    <td className="p-4 text-center">${item.payout}</td>
+                  )}
+                  {activeTab !== "traffic" && (
+                    <td className="p-4 text-center">
+                      {item.network_name || "-"}
+                    </td>
+                  )}
+                  {activeTab !== "networks" && (
+                    <td className="p-4 text-center">{item.geo || "-"}</td>
+                  )}
+                </tr>
+              );
+            })
           ) : (
             <tr>
               <td
