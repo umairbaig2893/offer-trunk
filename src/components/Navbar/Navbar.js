@@ -20,16 +20,11 @@ const Navbar = () => {
           {/* Logo */}
           <Link href="/">
             <div className="flex items-center cursor-pointer">
-              {/* 
-                Replace this with an <Image /> or <img> 
-                if you have a logo file inside public/ directory
-              */}
               <img
                 src="https://www.offertrunk.com/images/logo.png"
                 alt="Logo"
-                className="h-8 w-15 mr-2"
+                className="h-10 w-25 mr-2"
               />
-              {/* <span className="font-bold text-xl">MyApp</span> */}
             </div>
           </Link>
 

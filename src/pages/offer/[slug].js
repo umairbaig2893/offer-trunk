@@ -1,23 +1,20 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Head from "next/head";
+import Link from "next/link";
 
 export async function getServerSideProps(context) {
   const { slug } = context.params;
-  console.log("Fetching offers for slug:", slug);
 
   try {
     const response = await fetch(`https://api.offertrunk.com/api/getOffers`);
 
     if (!response.ok) {
-      console.error("API response not OK");
       return { notFound: true };
     }
 
     const result = await response.json();
-    console.log("API result:", result);
 
-    // Find offer by slug in the array
     const offer = result.data.find((item) => {
       const itemSlug = item.name
         .toLowerCase()
@@ -28,21 +25,19 @@ export async function getServerSideProps(context) {
     });
 
     if (!offer) {
-      console.error("No offer found with matching slug");
       return { notFound: true };
     }
 
     return { props: { offer } };
   } catch (error) {
-    console.error("Error fetching offers:", error);
     return { notFound: true };
   }
 }
 
 const OfferDetails = ({ offer }) => {
   const router = useRouter();
-
-  if (router.isFallback) return <p>Loading...</p>;
+  if (router.isFallback)
+    return <p className="text-center text-lg">Loading...</p>;
 
   return (
     <>
@@ -54,45 +49,100 @@ const OfferDetails = ({ offer }) => {
         />
       </Head>
 
-      <div className="container mx-auto p-6">
-        <h1 className="text-3xl font-bold">{offer?.name}</h1>
+      {/* Background Gradient */}
+      <div className="min-h-screen bg-gradient-to-r from-[#FAF0E6] to-[#D4E4F7] p-6">
+        {/* Breadcrumb Navigation */}
+        <div className="text-gray-600 text-sm mb-4">
+          <Link href="/" className="hover:underline">
+            Home
+          </Link>{" "}
+          /
+          <Link href="/" className="hover:underline">
+            {" "}
+            Offer
+          </Link>{" "}
+          /<span className="font-semibold">{offer?.name}</span>
+        </div>
 
-        {offer?.img && (
-          <Image
-            src={`https://api.offertrunk.com/images/${offer?.img}`}
-            alt={offer?.name || "Offer image"}
-            width={300}
-            height={200}
-            className="rounded-lg my-4"
-            priority
-          />
+        {/* Offer Header Section */}
+        <div className="flex items-center justify-between bg-white p-6 rounded-lg shadow-md">
+          <div className="flex items-center space-x-4">
+            {offer?.img && (
+              <Image
+                src={`https://api.offertrunk.com/images/${offer.img}`}
+                alt={offer?.name || "Offer Image"}
+                width={80}
+                height={80}
+                className="rounded-lg"
+              />
+            )}
+            <div>
+              <h1 className="text-2xl font-bold text-gray-800">
+                {offer?.name}
+              </h1>
+              {offer?.offer_link && (
+                <a
+                  href={offer.offer_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline"
+                >
+                  {offer.offer_link}
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Offer Description Section (New Row) */}
+        {/* <div className="mt-6 bg-white p-6 rounded-lg shadow-md">
+          <div className="grid grid-cols-1 text-sm">
+            <div>
+              <p className="font-semibold text-gray-600">Offer Description</p>
+              <p className="text-gray-800">
+                {offer?.description || "No description available."}
+              </p>
+            </div>
+          </div>
+        </div> */}
+
+        {/* Offer Information Section */}
+        <div className="mt-6 bg-white p-6 rounded-lg shadow-md">
+          <div className="grid grid-cols-3 gap-4 text-sm">
+            <div>
+              <p className="font-semibold text-gray-600">Platform</p>
+              <p className="text-gray-800">
+                {offer?.tracking_type || "Unknown"}
+              </p>
+            </div>
+            <div>
+              <p className="font-semibold text-gray-600">Category</p>
+              <p className="text-gray-800">{offer?.category_names || "N/A"}</p>
+            </div>
+
+            <div>
+              <p className="font-semibold text-gray-600">Countries</p>
+              <p className="text-gray-800">{offer?.geo || "-"}</p>
+            </div>
+            <div>
+              <p className="font-semibold text-gray-600">Payout</p>
+              <p className="text-gray-800 text-green-600">${offer?.payout}</p>
+            </div>
+            <div>
+              <p className="font-semibold text-gray-600">Network</p>
+              <p className="text-gray-800">{offer?.network_name || "-"}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Network Description Section */}
+        {offer?.network_description && (
+          <div className="mt-6 bg-white p-6 rounded-lg shadow-md text-center">
+            <p className="text-lg font-semibold text-gray-700">
+              {offer?.network_description}
+            </p>
+          </div>
         )}
-
-        <p className="text-lg">
-          {offer?.description || "No description available."}
-        </p>
-
-        <div className="mt-4">
-          <span className="font-semibold">Payout:</span> ${offer?.payout}
-        </div>
-        <div className="mt-2">
-          <span className="font-semibold">Network:</span>{" "}
-          {offer?.network_name || "-"}
-        </div>
-        <div className="mt-2">
-          <span className="font-semibold">Countries:</span> {offer?.geo || "-"}
-        </div>
-
-        <div className="mt-6">
-          <a
-            href={offer?.offer_link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-          >
-            Visit Offer
-          </a>
-        </div>
       </div>
     </>
   );

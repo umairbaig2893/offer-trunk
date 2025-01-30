@@ -256,12 +256,31 @@ const DataTable = ({ activeTab, filteredData }) => {
   return (
     <>
       <Head>
-        <title>Affiliate Offers - Your Website</title>
+        <title>
+          {activeTab === "offers"
+            ? "Best Affiliate Offers"
+            : "Affiliate Networks"}{" "}
+          - Your Website
+        </title>
         <meta
           name="description"
-          content="Browse the best affiliate offers and networks."
+          content={`Browse ${
+            activeTab === "offers"
+              ? "the best affiliate offers"
+              : "top affiliate networks"
+          } with detailed payouts and country availability.`}
+        />
+        <meta name="robots" content="index, follow" />
+        <meta
+          property="og:title"
+          content="Affiliate Offers & Networks - Your Website"
+        />
+        <meta
+          property="og:description"
+          content="Find the best offers and networks in the affiliate industry."
         />
       </Head>
+
       <div className="p-4">
         <table className="w-full border-collapse mt-4 shadow-lg rounded-lg overflow-hidden">
           <thead className="bg-gradient-to-r from-[#295F98] to-[#E1D7C6] text-white">
@@ -297,19 +316,15 @@ const DataTable = ({ activeTab, filteredData }) => {
                     className="border-b transition-all duration-300 hover:bg-[#E1D7C6]"
                   >
                     <td className="p-4 flex items-center space-x-2">
-                      <Link
-                        href={`/offer/${slug}`}
-                        prefetch={true}
-                        legacyBehavior
-                      >
+                      <Link href={`/offer/${slug}`} legacyBehavior>
                         <a className="flex items-center w-full">
                           <Image
                             src={
                               item.img
                                 ? `https://api.offertrunk.com/images/${item.img}`
-                                : "https://via.placeholder.com/70"
+                                : "/placeholder.png"
                             }
-                            alt={`Offer: ${item.name}`}
+                            alt={`Affiliate offer: ${item.name}`}
                             width={50}
                             height={30}
                             className="mr-2 rounded-lg"
@@ -330,12 +345,12 @@ const DataTable = ({ activeTab, filteredData }) => {
                       <td className="p-4 text-center">{item.geo || "-"}</td>
                     )}
                     {activeTab === "offers" && (
-                      <td className="py-3 px-4">
+                      <td className="py-3 px-4 text-center">
                         <a
                           href={item.offer_link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-600 underline"
+                          className="bg-gradient-to-r from-[#E1D7C6] to-[#295F98] text-white px-4 py-2 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition-all inline-block"
                           onClick={(e) => e.stopPropagation()}
                         >
                           Visit Offer
