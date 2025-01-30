@@ -25,9 +25,9 @@ const Navbar = () => {
                 if you have a logo file inside public/ directory
               */}
               <img
-                src="../../../public/assets/logo.png"
+                src="https://www.offertrunk.com/images/logo.png"
                 alt="Logo"
-                className="h-8 w-8 mr-2"
+                className="h-8 w-15 mr-2"
               />
               {/* <span className="font-bold text-xl">MyApp</span> */}
             </div>
