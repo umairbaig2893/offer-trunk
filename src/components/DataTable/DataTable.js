@@ -50,6 +50,155 @@
 
 // export default DataTable;
 
+///2nd one is working as expected
+// import Link from "next/link";
+// import { useState } from "react";
+// import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+// import Image from "next/image";
+
+// const DataTable = ({ activeTab, filteredData }) => {
+//   const itemsPerPage = 10;
+//   const [currentPage, setCurrentPage] = useState(1);
+
+//   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+//   const indexOfLastItem = currentPage * itemsPerPage;
+//   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+//   const currentData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+
+//   const goToPage = (page) => {
+//     if (page >= 1 && page <= totalPages) {
+//       setCurrentPage(page);
+//     }
+//   };
+
+//   const renderPageNumbers = () => {
+//     const pages = [];
+//     if (totalPages <= 5) {
+//       for (let i = 1; i <= totalPages; i++) {
+//         pages.push(i);
+//       }
+//     } else {
+//       if (currentPage > 3) pages.push(1, "...");
+
+//       for (
+//         let i = Math.max(2, currentPage - 1);
+//         i <= Math.min(totalPages - 1, currentPage + 1);
+//         i++
+//       ) {
+//         pages.push(i);
+//       }
+
+//       if (currentPage < totalPages - 2) pages.push("...", totalPages);
+//     }
+//     return pages;
+//   };
+//   const slugify = (text) =>
+//     text
+//       .toString()
+//       .toLowerCase()
+//       .trim()
+//       .replace(/\s+/g, "-")
+//       .replace(/[^\w-]+/g, "")
+//       .replace(/--+/g, "-");
+
+//   return (
+//     <div className="p-4">
+//       <table className="w-full border-collapse mt-4 shadow-lg rounded-lg overflow-hidden">
+//         <thead className="bg-gradient-to-r from-[#295F98] to-[#E1D7C6] text-white">
+//           <tr>
+//             <th className="border-b-2 p-4 text-lg font-semibold">NAME</th>
+//             {activeTab === "offers" && (
+//               <th className="border-b-2 p-4 text-lg font-semibold">PAYOUT</th>
+//             )}
+//             {activeTab !== "traffic" && (
+//               <th className="border-b-2 p-4 text-lg font-semibold">NETWORK</th>
+//             )}
+//             {activeTab !== "networks" && (
+//               <th className="border-b-2 p-4 text-lg font-semibold">
+//                 COUNTRIES
+//               </th>
+//             )}
+//             {activeTab === "offers" && (
+//               <th className="border-b-2 p-4 text-lg font-semibold">
+//                 VISIT OFFER
+//               </th>
+//             )}
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {currentData.length > 0 ? (
+//             currentData.map((item, index) => {
+//               // Create slug inside the map callback
+//               const slug = slugify(item.name);
+
+//               return (
+//                 <tr
+//                   key={index}
+//                   className="border-b transition-all duration-300 hover:bg-[#E1D7C6]"
+//                 >
+//                   <td className="p-4 flex items-center space-x-2">
+//                     <Link href={`/offer/${slug}`} legacyBehavior>
+//                       <a className="flex items-center w-full">
+//                         <Image
+//                           src={
+//                             item.img
+//                               ? `https://api.offertrunk.com/images/${item.img}`
+//                               : "https://via.placeholder.com/70"
+//                           }
+//                           alt={`Offer: ${item.name}`}
+//                           width={50}
+//                           height={30}
+//                           className="mr-2 rounded-lg"
+//                         />
+//                         {item.name}
+//                       </a>
+//                     </Link>
+//                   </td>
+//                   {activeTab === "offers" && (
+//                     <td className="p-4 text-center">${item.payout}</td>
+//                   )}
+//                   {activeTab !== "traffic" && (
+//                     <td className="p-4 text-center">
+//                       {item.network_name || "-"}
+//                     </td>
+//                   )}
+//                   {activeTab !== "networks" && (
+//                     <td className="p-4 text-center">{item.geo || "-"}</td>
+//                   )}
+//                   {activeTab === "offers" && (
+//                     <td className="py-3 px-4">
+//                       <a
+//                         href={item.offer_link}
+//                         target="_blank"
+//                         rel="noopener noreferrer"
+//                         className="text-blue-600 underline"
+//                         onClick={(e) => e.stopPropagation()} // Prevent row click when link is clicked
+//                       >
+//                         Visit Offer
+//                       </a>
+//                     </td>
+//                   )}
+//                 </tr>
+//               );
+//             })
+//           ) : (
+//             <tr>
+//               <td
+//                 colSpan="5"
+//                 className="text-center p-4 text-xl font-semibold text-gray-500"
+//               >
+//                 No data available
+//               </td>
+//             </tr>
+//           )}
+//         </tbody>
+//       </table>
+//     </div>
+//   );
+// };
+
+// export default DataTable;
+
 import Link from "next/link";
 import { useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
@@ -91,12 +240,15 @@ const DataTable = ({ activeTab, filteredData }) => {
     }
     return pages;
   };
-  const createSlug = (name) => {
-    return name
+
+  const slugify = (text) =>
+    text
+      .toString()
       .toLowerCase()
-      .replace(/[^\w\s]/gi, "")
-      .replace(/\s+/g, "-");
-  };
+      .trim()
+      .replace(/\s+/g, "-")
+      .replace(/[^\w-]+/g, "")
+      .replace(/--+/g, "-");
 
   return (
     <div className="p-4">
@@ -115,37 +267,23 @@ const DataTable = ({ activeTab, filteredData }) => {
                 COUNTRIES
               </th>
             )}
+            {activeTab === "offers" && (
+              <th className="border-b-2 p-4 text-lg font-semibold">
+                VISIT OFFER
+              </th>
+            )}
           </tr>
         </thead>
         <tbody>
           {currentData.length > 0 ? (
             currentData.map((item, index) => {
-              // Create slug inside the map callback
-              const slug = createSlug(item.name);
-
+              const slug = slugify(item.name);
               return (
                 <tr
                   key={index}
-                  className={`border-b transition-all duration-300 hover:bg-[#E1D7C6]`}
+                  className="border-b transition-all duration-300 hover:bg-[#E1D7C6]"
                 >
                   <td className="p-4 flex items-center space-x-2">
-                    {/* <Link href={`/offer/${slug}`} passHref>
-                      <div className="flex items-center w-full cursor-pointer">
-                        <Image
-                          src={
-                            item.img
-                              ? `https://api.offertrunk.com/images/${item.img}`
-                              : "https://via.placeholder.com/300"
-                          }
-                          alt={item.name}
-                          width={60}
-                          height={40}
-                          className="rounded-lg mr-4"
-                          objectFit="cover"
-                        />
-                        {item.name}
-                      </div>
-                    </Link> */}
                     <Link href={`/offer/${slug}`} legacyBehavior>
                       <a className="flex items-center w-full">
                         <Image
@@ -156,7 +294,7 @@ const DataTable = ({ activeTab, filteredData }) => {
                           }
                           alt={`Offer: ${item.name}`}
                           width={50}
-                          height={50}
+                          height={30}
                           className="mr-2 rounded-lg"
                         />
                         {item.name}
@@ -174,13 +312,26 @@ const DataTable = ({ activeTab, filteredData }) => {
                   {activeTab !== "networks" && (
                     <td className="p-4 text-center">{item.geo || "-"}</td>
                   )}
+                  {activeTab === "offers" && (
+                    <td className="py-3 px-4">
+                      <a
+                        href={item.offer_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 underline"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        Visit Offer
+                      </a>
+                    </td>
+                  )}
                 </tr>
               );
             })
           ) : (
             <tr>
               <td
-                colSpan="4"
+                colSpan="5"
                 className="text-center p-4 text-xl font-semibold text-gray-500"
               >
                 No data available
@@ -189,22 +340,19 @@ const DataTable = ({ activeTab, filteredData }) => {
           )}
         </tbody>
       </table>
-
-      {/* Pagination Controls */}
       {totalPages > 1 && (
         <div className="flex justify-center items-center space-x-2 mt-4">
           <button
+            onClick={() => goToPage(currentPage - 1)}
+            disabled={currentPage === 1}
             className={`px-4 py-2 border rounded-lg transition ${
               currentPage === 1
                 ? "opacity-50 cursor-not-allowed bg-gray-300"
                 : "bg-blue-600 text-white hover:bg-blue-700"
             }`}
-            onClick={() => goToPage(currentPage - 1)}
-            disabled={currentPage === 1}
           >
             <FaAngleLeft />
           </button>
-
           {renderPageNumbers().map((page, index) =>
             page === "..." ? (
               <span key={index} className="px-4 py-2 text-gray-500">
@@ -213,26 +361,25 @@ const DataTable = ({ activeTab, filteredData }) => {
             ) : (
               <button
                 key={index}
+                onClick={() => goToPage(page)}
                 className={`px-4 py-2 border rounded-lg transition ${
                   currentPage === page
                     ? "bg-gradient-to-r from-[#E1D7C6] to-[#295F98] text-white"
                     : "bg-gray-200 hover:bg-gray-300"
                 }`}
-                onClick={() => goToPage(page)}
               >
                 {page}
               </button>
             )
           )}
-
           <button
+            onClick={() => goToPage(currentPage + 1)}
+            disabled={currentPage === totalPages}
             className={`px-4 py-2 border rounded-lg transition ${
               currentPage === totalPages
                 ? "opacity-50 cursor-not-allowed bg-gray-300"
                 : "bg-blue-600 text-white hover:bg-blue-700"
             }`}
-            onClick={() => goToPage(currentPage + 1)}
-            disabled={currentPage === totalPages}
           >
             <FaAngleRight />
           </button>

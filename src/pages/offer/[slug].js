@@ -1,30 +1,27 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps(context) {
+  const { slug } = context.params; // Changed from title to slug
+
   try {
-    const res = await fetch(
-      `https://api.offertrunk.com/api/getOffers/${params.slug}`
+    // Fetch single offer directly from API
+    const response = await fetch(
+      `https://api.offertrunk.com/api/getOfferBySlug/${slug}`
     );
 
-    if (!res.ok) return { notFound: true };
-
-    const contentType = res.headers.get("content-type");
-    if (!contentType?.includes("application/json")) {
+    if (!response.ok) {
       return { notFound: true };
     }
 
-    const data = await res.json();
+    const result = await response.json();
 
-    // Find the specific offer by slugified name
-    const offer = data.data.find(
-      (item) => item.name.toLowerCase().replace(/ /g, "") === params.slug
-    );
-
-    if (!offer) return { notFound: true };
+    if (!result?.offer) {
+      return { notFound: true };
+    }
 
     return {
-      props: { offer },
+      props: { offer: result.offer },
     };
   } catch (error) {
     return { notFound: true };
