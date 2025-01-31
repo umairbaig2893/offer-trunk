@@ -17,7 +17,6 @@ function Banner() {
     "https://www.offertrunk.com/images/banners/5.jpg",
   ];
 
-  // Custom Next Arrow
   const NextArrow = ({ onClick }) => (
     <div
       className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gradient-to-r from-[#295F98] to-[#E1D7C6] text-white p-3 rounded-full cursor-pointer z-10 shadow-lg"
@@ -27,7 +26,6 @@ function Banner() {
     </div>
   );
 
-  // Custom Previous Arrow
   const PrevArrow = ({ onClick }) => (
     <div
       className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gradient-to-r from-[#E1D7C6] to-[#295F98] text-white p-3 rounded-full cursor-pointer z-10 shadow-lg"
@@ -41,22 +39,22 @@ function Banner() {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 3, // Show 3 images at a time
-    slidesToScroll: 1, // Scroll 1 at a time
+    slidesToShow: 3,
+    slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
       {
-        breakpoint: 1024, // For tablets
+        breakpoint: 1024, 
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
         },
       },
       {
-        breakpoint: 768, // For mobile
+        breakpoint: 768, 
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,

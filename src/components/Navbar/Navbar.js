@@ -28,7 +28,6 @@ const Navbar = () => {
             </div>
           </Link>
 
-          {/* Mobile menu button */}
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
@@ -38,10 +37,8 @@ const Navbar = () => {
             >
               <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
                 {isOpen ? (
-                  // Close icon (x)
                   <path fillRule="evenodd" d="M6 18L18 6M6 6l12 12" />
                 ) : (
-                  // Hamburger icon
                   <path
                     fillRule="evenodd"
                     d="M4 5h16v2H4zm0 6h16v2H4zm0 6h16v2H4z"
@@ -52,7 +49,6 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Menu Items */}
         <div
           className={`mt-2 md:mt-0 ${
             isOpen ? "block" : "hidden"
@@ -65,16 +61,16 @@ const Navbar = () => {
             Home
           </Link>
           <Link
-            href="/about"
+            href="/login"
             className="block px-3 py-2 text-white hover:text-black-900 md:ml-4"
           >
-            About
+            Login
           </Link>
           <Link
-            href="/contact"
+            href="/register"
             className="block px-3 py-2 text-white hover:text-black-900 md:ml-4"
           >
-            Contact
+            Register
           </Link>
         </div>
       </div>
