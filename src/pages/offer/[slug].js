@@ -109,7 +109,7 @@ const OfferDetails = ({ offer, relatedOffers }) => {
             Home
           </Link>{" "}
           /
-          <Link href="/offers" className="hover:underline">
+          <Link href="/" className="hover:underline">
             {" "}
             Offers
           </Link>{" "}

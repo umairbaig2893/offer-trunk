@@ -104,7 +104,7 @@ const TrafficDetails = ({
             Home
           </Link>{" "}
           /
-          <Link href="/traffic" className="hover:underline">
+          <Link href="/" className="hover:underline">
             {" "}
             Traffic Sources
           </Link>{" "}
