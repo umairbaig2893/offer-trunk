@@ -1,11 +1,13 @@
 import Banner from "@/components/Banner/Banner";
 import DataTable from "@/components/DataTable/DataTable";
-import SearchFilters from "@/components/Filter/SearchFilter";
+import SearchFilters from "@/components/Filter/TabWithFilter";
 import Navbar from "@/components/Navbar/Navbar";
-import Tabs from "@/components/Tab/Tab";
+// import Tabs from "@/components/Tab/Tab";
 import Loader from "@/components/Loader/Loader"; // Import Loader
 import { useState } from "react";
 import Head from "next/head";
+import Tabs from "@/components/Tab/Tab";
+import TabsWithFilters from "@/components/Filter/TabWithFilter";
 
 const API_URLS = {
   offers: "https://api.offertrunk.com/api/getOffers",
@@ -60,12 +62,12 @@ export async function getServerSideProps() {
 }
 
 export default function Home({ offers, networks, trafficSources, error }) {
-  const [activeTab, setActiveTab] = useState("offers"); // Default tab
+  // Default tab
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false); // Loader state
   const [selectedNetwork, setSelectedNetwork] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
-
+  const [activeTab, setActiveTab] = useState("offers");
   const handleTabChange = (tab) => {
     setLoading(true);
     setActiveTab(tab);
@@ -104,8 +106,13 @@ export default function Home({ offers, networks, trafficSources, error }) {
       </Head>
 
       <Navbar />
-      <Banner />
-      <SearchFilters
+      {/* <Banner /> */}
+
+      {/* <Tabs activeTab={activeTab} setActiveTab={handleTabChange} /> */}
+
+      <TabsWithFilters
+        activeTab={activeTab}
+        setActiveTab={handleTabChange}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         selectedNetwork={selectedNetwork}
@@ -115,13 +122,12 @@ export default function Home({ offers, networks, trafficSources, error }) {
         offers={offers}
       />
 
-      <Tabs activeTab={activeTab} setActiveTab={handleTabChange} />
-
       {loading ? (
         <Loader />
       ) : (
-        <DataTable activeTab={activeTab} filteredData={getFilteredData()} />
-        // <></>
+        <>
+          <DataTable activeTab={activeTab} filteredData={getFilteredData()} />
+        </>
       )}
     </div>
   );

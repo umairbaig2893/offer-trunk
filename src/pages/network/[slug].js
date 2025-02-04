@@ -10,6 +10,7 @@ import {
   FaLinkedinIn,
   FaInstagram,
 } from "react-icons/fa";
+import Footer from "@/components/Footer/Footer";
 
 export async function getServerSideProps(context) {
   const { slug } = context.params;
@@ -52,7 +53,7 @@ export async function getServerSideProps(context) {
 
 const NetworkDetails = ({ network, otherNetworks }) => {
   const router = useRouter();
-  const itemsPerPage = 5; 
+  const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
 
   if (router.isFallback) {
@@ -98,6 +99,10 @@ const NetworkDetails = ({ network, otherNetworks }) => {
       }
     }
     return pages;
+  };
+
+  const handleReadReview = () => {
+    router.push(`/network/review/${encodeURIComponent(network.name)}`);
   };
 
   return (
@@ -158,6 +163,14 @@ const NetworkDetails = ({ network, otherNetworks }) => {
                 <p className="text-gray-500">No website available</p>
               )}
             </div>
+          </div>
+          <div className="review-section">
+            <button
+              onClick={handleReadReview}
+              className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            >
+              Read Review
+            </button>
           </div>
         </div>
 
@@ -336,6 +349,9 @@ const NetworkDetails = ({ network, otherNetworks }) => {
             </Link>
           </div>
         </div>
+      </div>
+      <div>
+        <Footer />
       </div>
     </>
   );
