@@ -86,10 +86,6 @@ export default function Home({ offers, networks, trafficSources, recentPage }) {
     if (activeTab === "offers") data = offers.fullData;
     else if (activeTab === "networks") data = networks.fullData;
     else if (activeTab === "traffic") data = trafficSources.fullData;
-    console.log(`Tab: ${activeTab}`);
-    console.log(`Total Items: ${data.length}`);
-    console.log(`Overall Pages: ${overallPages}`);
-    console.log("First few data entries:", data.slice(0, 5));
 
     // Ensure we are fetching all pages
     if (data.length === 0) {
@@ -108,7 +104,6 @@ export default function Home({ offers, networks, trafficSources, recentPage }) {
   };
 
   // Destructure the result of filtering and pagination
-  const { paginatedData, overallPages } = getFilteredData();
 
   return (
     <div className="bg-white min-h-screen">
