@@ -1,12 +1,9 @@
-import Banner from "@/components/Banner/Banner";
 import DataTable from "@/components/DataTable/DataTable";
-import SearchFilters from "@/components/Filter/TabWithFilter";
 import Navbar from "@/components/Navbar/Navbar";
 // import Tabs from "@/components/Tab/Tab";
 import Loader from "@/components/Loader/Loader"; // Import Loader
 import { useState } from "react";
 import Head from "next/head";
-import Tabs from "@/components/Tab/Tab";
 import TabsWithFilters from "@/components/Filter/TabWithFilter";
 
 const API_URLS = {

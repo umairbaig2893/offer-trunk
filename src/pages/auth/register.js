@@ -241,7 +241,7 @@ export default function Register() {
           {/* Login Redirect */}
           <p className="mt-4 text-center text-gray-600">
             Already have an account?{" "}
-            <Link href="/login">
+            <Link href="/auth/login">
               <span className="text-blue-600 font-semibold cursor-pointer">
                 Login
               </span>

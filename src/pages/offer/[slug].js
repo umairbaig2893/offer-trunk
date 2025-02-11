@@ -10,6 +10,7 @@ import {
   FaLinkedinIn,
   FaInstagram,
 } from "react-icons/fa";
+import Footer from "@/components/Footer/Footer";
 
 export async function getServerSideProps(context) {
   const { slug } = context.params;
@@ -121,7 +122,7 @@ const OfferDetails = ({ offer, relatedOffers }) => {
           <div className="flex items-center space-x-4">
             {offer?.img && (
               <Image
-                src={`https://api.offertrunk.com/images/${offer.img}`}
+                src={`https://api.offertrunk.com/images/offers/${offer.img}`}
                 alt={offer?.name || "Offer Image"}
                 width={80}
                 height={80}
@@ -181,7 +182,7 @@ const OfferDetails = ({ offer, relatedOffers }) => {
               Other Offers from this Network
             </h2>
             <div className="overflow-x-auto">
-              <table className="min-w-full border-collapse border border-gray-300">
+              <table className="w-full max-w-4xl border-collapse border border-gray-300 sm:w-full">
                 <thead>
                   <tr className="bg-gradient-to-r from-[#295F98] to-[#E1D7C6] text-white">
                     <th className="border border-gray-300 p-2 text-left">
@@ -206,7 +207,7 @@ const OfferDetails = ({ offer, relatedOffers }) => {
                       <td className="border border-gray-300 p-2 flex items-center space-x-2">
                         {relatedOffer.img && (
                           <Image
-                            src={`https://api.offertrunk.com/images/${relatedOffer.img}`}
+                            src={`https://api.offertrunk.com/images/offers/${relatedOffer.img}`}
                             alt={relatedOffer.name}
                             width={50}
                             height={50}
@@ -233,41 +234,41 @@ const OfferDetails = ({ offer, relatedOffers }) => {
                   ))}
                 </tbody>
               </table>
+              {totalPages > 1 && (
+                <div className="flex justify-start items-center space-x-2 mt-4 px-5">
+                  <button
+                    onClick={() => goToPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 border rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+                  >
+                    <FaAngleLeft />
+                  </button>
+                  {renderPageNumbers().map((page, index) => (
+                    <button
+                      key={index}
+                      onClick={() => typeof page === "number" && goToPage(page)}
+                      className={`px-4 py-2 border rounded-lg ${
+                        currentPage === page
+                          ? "bg-blue-600 text-white"
+                          : "bg-gray-200 hover:bg-gray-300"
+                      }`}
+                      disabled={page === "..."} // Disable button if it's an ellipsis
+                    >
+                      {page}
+                    </button>
+                  ))}
+                  <button
+                    onClick={() => goToPage(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="px-4 py-2 border rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+                  >
+                    <FaAngleRight />
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Advanced Pagination Controls */}
-            {totalPages > 1 && (
-              <div className="flex justify-center items-center space-x-2 mt-4">
-                <button
-                  onClick={() => goToPage(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className="px-4 py-2 border rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
-                >
-                  <FaAngleLeft />
-                </button>
-                {renderPageNumbers().map((page, index) => (
-                  <button
-                    key={index}
-                    onClick={() => typeof page === "number" && goToPage(page)}
-                    className={`px-4 py-2 border rounded-lg ${
-                      currentPage === page
-                        ? "bg-blue-600 text-white"
-                        : "bg-gray-200 hover:bg-gray-300"
-                    }`}
-                    disabled={page === "..."} // Disable button if it's an ellipsis
-                  >
-                    {page}
-                  </button>
-                ))}
-                <button
-                  onClick={() => goToPage(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  className="px-4 py-2 border rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
-                >
-                  <FaAngleRight />
-                </button>
-              </div>
-            )}
           </div>
         )}
 
@@ -327,6 +328,9 @@ const OfferDetails = ({ offer, relatedOffers }) => {
             </Link>
           </div>
         </div>
+        {/* <div>
+          <Footer />
+        </div> */}
       </div>
     </>
   );

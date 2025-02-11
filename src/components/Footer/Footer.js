@@ -3,7 +3,7 @@ import { FaFacebookF, FaYoutube } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-[#FAF0E6] to-[#D4E4F7] text-black mt-10">
+    <footer className="bg-[#0a64bc] text-black mt-10">
       <div className="w-full flex flex-wrap justify-between max-w-screen-xl mx-auto pt-10 px-4 md:px-0">
         {/* Left Section: Logo & Description */}
         <div className="w-full md:w-1/3 mb-6 md:mb-0">

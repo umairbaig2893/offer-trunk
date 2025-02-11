@@ -135,7 +135,7 @@ const NetworkDetails = ({ network, otherNetworks }) => {
             {/* Network Image */}
             {network?.img ? (
               <Image
-                src={`https://api.offertrunk.com/images/${network.img}`}
+                src={`https://api.offertrunk.com/images/networks/${network.img}`}
                 alt={network?.name || "Network Image"}
                 width={100}
                 height={100}
@@ -210,88 +210,92 @@ const NetworkDetails = ({ network, otherNetworks }) => {
           <h2 className="text-xl font-bold text-gray-800 mb-4">
             Other Networks
           </h2>
-          <table className="w-full border-collapse border border-gray-300">
-            <thead>
-              <tr className="bg-blue-600 text-white">
-                <th className="border border-gray-300 px-4 py-2">Name</th>
-                <th className="border border-gray-300 px-4 py-2">
-                  Description
-                </th>
-                <th className="border border-gray-300 px-4 py-2">
-                  Offer Count
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {paginatedNetworks.map((item, index) => (
-                <tr key={index} className="border border-gray-300 text-center">
-                  <td className="border border-gray-300 px-4 py-2">
-                    <Link
-                      href={`/network/${item.name
-                        .toLowerCase()
-                        .trim()
-                        .replace(/\s+/g, "-")
-                        .replace(/[^\w-]+/g, "")}`}
-                    >
-                      <div className="flex items-center space-x-2">
-                        {item.img && (
-                          <Image
-                            src={`https://api.offertrunk.com/images/${item.img}`}
-                            alt={item.name}
-                            width={50}
-                            height={50}
-                            className="rounded-md"
-                          />
-                        )}
-                        <span className="text-blue-600 hover:underline">
-                          {item.name}
-                        </span>
-                      </div>
-                    </Link>
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {item.description || "N/A"}
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {item.offer_count || 0}
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full max-w-4xl border-collapse border border-gray-300 sm:w-full">
+              <thead>
+                <tr className="bg-blue-600 text-white">
+                  <th className="border border-gray-300 px-4 py-2">Name</th>
+                  <th className="border border-gray-300 px-4 py-2">
+                    Description
+                  </th>
+                  <th className="border border-gray-300 px-4 py-2">
+                    Offer Count
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-
-          {totalPages > 1 && (
-            <div className="flex justify-center items-center space-x-2 mt-4">
-              <button
-                onClick={() => goToPage(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="px-4 py-2 border rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
-              >
-                <FaAngleLeft />
-              </button>
-              {renderPageNumbers().map((page, index) => (
+              </thead>
+              <tbody>
+                {paginatedNetworks.map((item, index) => (
+                  <tr
+                    key={index}
+                    className="border border-gray-300 text-center"
+                  >
+                    <td className="border border-gray-300 px-4 py-2">
+                      <Link
+                        href={`/network/${item.name
+                          .toLowerCase()
+                          .trim()
+                          .replace(/\s+/g, "-")
+                          .replace(/[^\w-]+/g, "")}`}
+                      >
+                        <div className="flex items-center space-x-2">
+                          {item.img && (
+                            <Image
+                              src={`https://api.offertrunk.com/images/networks/${item.img}`}
+                              alt={item.name}
+                              width={50}
+                              height={50}
+                              className="rounded-md"
+                            />
+                          )}
+                          <span className="text-blue-600 hover:underline">
+                            {item.name}
+                          </span>
+                        </div>
+                      </Link>
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      {item.description || "N/A"}
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      {item.offer_count || 0}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {totalPages > 1 && (
+              <div className="flex justify-start items-center space-x-2 mt-4">
                 <button
-                  key={index}
-                  onClick={() => typeof page === "number" && goToPage(page)}
-                  className={`px-4 py-2 border rounded-lg ${
-                    currentPage === page
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-200 hover:bg-gray-300"
-                  }`}
-                  disabled={page === "..."}
+                  onClick={() => goToPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 border rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
                 >
-                  {page}
+                  <FaAngleLeft />
                 </button>
-              ))}
-              <button
-                onClick={() => goToPage(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="px-4 py-2 border rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
-              >
-                <FaAngleRight />
-              </button>
-            </div>
-          )}
+                {renderPageNumbers().map((page, index) => (
+                  <button
+                    key={index}
+                    onClick={() => typeof page === "number" && goToPage(page)}
+                    className={`px-4 py-2 border rounded-lg ${
+                      currentPage === page
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-200 hover:bg-gray-300"
+                    }`}
+                    disabled={page === "..."}
+                  >
+                    {page}
+                  </button>
+                ))}
+                <button
+                  onClick={() => goToPage(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="px-4 py-2 border rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+                >
+                  <FaAngleRight />
+                </button>
+              </div>
+            )}
+          </div>
         </div>
         <div className="text-center py-6 mt-10">
           <div className="flex justify-center">

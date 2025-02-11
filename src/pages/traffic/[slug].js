@@ -10,6 +10,7 @@ import {
   FaLinkedinIn,
   FaInstagram,
 } from "react-icons/fa";
+import Footer from "@/components/Footer/Footer";
 
 export async function getServerSideProps(context) {
   const { slug } = context.params;
@@ -117,7 +118,7 @@ const TrafficDetails = ({
             {/* Traffic Image */}
             {traffic?.img ? (
               <Image
-                src={`https://api.offertrunk.com/images/${traffic.img}`}
+                src={`https://api.offertrunk.com/images/traffic/${traffic.img}`}
                 alt={traffic?.name || "Traffic Image"}
                 width={100}
                 height={100}
@@ -188,7 +189,7 @@ const TrafficDetails = ({
             Other Traffic Sources
           </h2>
           <div className="overflow-x-auto">
-            <table className="min-w-full border-collapse border border-gray-300">
+            <table className="w-full max-w-4xl border-collapse border border-gray-300 sm:w-full">
               <thead>
                 <tr className="bg-gradient-to-r from-[#295F98] to-[#E1D7C6] text-white">
                   <th className="border border-gray-300 p-2 text-left">NAME</th>
@@ -209,7 +210,7 @@ const TrafficDetails = ({
                     <td className="border border-gray-300 p-2 flex items-center space-x-2">
                       {trafficSource.img && (
                         <Image
-                          src={`https://api.offertrunk.com/images/${trafficSource.img}`}
+                          src={`https://api.offertrunk.com/images/traffic/${trafficSource.img}`}
                           alt={trafficSource.name}
                           width={50}
                           height={50}
@@ -247,41 +248,40 @@ const TrafficDetails = ({
                 ))}
               </tbody>
             </table>
-          </div>
-
-          {/* Pagination Controls */}
-          {totalPages > 1 && (
-            <div className="flex justify-center items-center space-x-2 mt-4">
-              <button
-                onClick={() => goToPage(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="px-4 py-2 border rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
-              >
-                <FaAngleLeft />
-              </button>
-              {renderPageNumbers().map((page, index) => (
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="flex justify-center items-center space-x-2 mt-4">
                 <button
-                  key={index}
-                  onClick={() => typeof page === "number" && goToPage(page)}
-                  className={`px-4 py-2 border rounded-lg ${
-                    currentPage === page
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-200 hover:bg-gray-300"
-                  }`}
-                  disabled={page === "..."} // Disable button if it's an ellipsis
+                  onClick={() => goToPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 border rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
                 >
-                  {page}
+                  <FaAngleLeft />
                 </button>
-              ))}
-              <button
-                onClick={() => goToPage(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="px-4 py-2 border rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
-              >
-                <FaAngleRight />
-              </button>
-            </div>
-          )}
+                {renderPageNumbers().map((page, index) => (
+                  <button
+                    key={index}
+                    onClick={() => typeof page === "number" && goToPage(page)}
+                    className={`px-4 py-2 border rounded-lg ${
+                      currentPage === page
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-200 hover:bg-gray-300"
+                    }`}
+                    disabled={page === "..."} // Disable button if it's an ellipsis
+                  >
+                    {page}
+                  </button>
+                ))}
+                <button
+                  onClick={() => goToPage(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="px-4 py-2 border rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+                >
+                  <FaAngleRight />
+                </button>
+              </div>
+            )}
+          </div>
         </div>
         <div className="text-center py-6 mt-10">
           <div className="flex justify-center">
@@ -339,6 +339,9 @@ const TrafficDetails = ({
             </Link>
           </div>
         </div>
+        {/* <div>
+          <Footer />
+        </div> */}
       </div>
     </>
   );

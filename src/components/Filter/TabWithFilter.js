@@ -257,9 +257,11 @@ const TabsWithFilters = ({
   offers,
 }) => {
   return (
-    <div className="p-4 bg-white rounded-md">
-      {/* Tabs */}
-      <div className="flex flex-wrap justify-center items-center bg-blue-600 text-white py-4 rounded-md shadow-md sm:py-0">
+    <>
+      <div
+        className="flex flex-wrap justify-center py-3 items-center bg-[#0a64bc] text-white py-4 shadow-md sm:py-0"
+        style={{ fontFamily: "'Open Sans', sans-serif" }}
+      >
         {[
           { key: "offers", label: "OFFERS" },
           { key: "networks", label: "AFFILIATE NETWORKS" },
@@ -278,102 +280,107 @@ const TabsWithFilters = ({
           </button>
         ))}
       </div>
-      {/* Wrapper - Responsive Layout */}
-      <div className="flex flex-col md:flex-col lg:flex-row items-center lg:items-start gap-4 mt-4 sm:mt-5">
-        {/* Left Side - Inputs & Image on Desktop */}
+
+      <div className="p-4 bg-white rounded-md">
+        {/* Tabs */}
+
         {/* Wrapper - Responsive Layout */}
-        <div className="flex flex-col w-full">
-          {/* Search & Filters (Same Row on lg, Column on md) */}
-          <div className="flex flex-wrap items-center gap-4 justify-start sm:justify-start w-full">
-            {/* Search Input */}
-            <div className="relative w-full sm:w-80">
-              <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
-              <input
-                type="text"
-                placeholder="Search By Name"
-                className="border rounded-lg px-4 pl-10 w-full sm:w-80 h-[48px] text-sm shadow-sm focus:ring-2 focus:ring-blue-400"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
+        <div className="flex flex-col md:flex-col lg:flex-row items-center lg:items-start gap-4 mt-4 sm:mt-5">
+          {/* Left Side - Inputs & Image on Desktop */}
+          {/* Wrapper - Responsive Layout */}
+          <div className="flex flex-col w-full">
+            {/* Search & Filters (Same Row on lg, Column on md) */}
+            <div className="flex flex-wrap items-center gap-4 justify-start sm:justify-start w-full">
+              {/* Search Input */}
+              <div className="relative w-full sm:w-80">
+                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+                <input
+                  type="text"
+                  placeholder="Search By Name"
+                  className="border rounded-lg px-4 pl-10 w-full sm:w-80 h-[48px] text-sm shadow-sm focus:ring-2 focus:ring-blue-400"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+
+              {/* Filters (only for Offers Tab) */}
+              {activeTab === "offers" && (
+                <>
+                  <select
+                    className="border rounded-lg px-4 w-full sm:w-80 h-[48px] text-sm shadow-sm focus:ring-2 focus:ring-blue-400 appearance-none"
+                    value={selectedNetwork}
+                    onChange={(e) => setSelectedNetwork(e.target.value)}
+                  >
+                    <option value="">Select Networks</option>
+                    {getUniqueNetworks(offers).map((network, index) => (
+                      <option key={index} value={network}>
+                        {network}
+                      </option>
+                    ))}
+                  </select>
+
+                  <select
+                    className="border rounded-lg px-4 w-full sm:w-80 h-[48px] text-sm shadow-sm focus:ring-2 focus:ring-blue-400 appearance-none"
+                    value={selectedCountry}
+                    onChange={(e) => setSelectedCountry(e.target.value)}
+                  >
+                    <option value="">Select Country</option>
+                    {getUniqueCountries(offers).map((country) => (
+                      <option key={country.value} value={country.value}>
+                        {country.label}
+                      </option>
+                    ))}
+                  </select>
+                </>
+              )}
             </div>
 
-            {/* Filters (only for Offers Tab) */}
-            {activeTab === "offers" && (
-              <>
-                <select
-                  className="border rounded-lg px-4 w-full sm:w-80 h-[48px] text-sm shadow-sm focus:ring-2 focus:ring-blue-400 appearance-none"
-                  value={selectedNetwork}
-                  onChange={(e) => setSelectedNetwork(e.target.value)}
-                >
-                  <option value="">Select Networks</option>
-                  {getUniqueNetworks(offers).map((network, index) => (
-                    <option key={index} value={network}>
-                      {network}
-                    </option>
-                  ))}
-                </select>
-
-                <select
-                  className="border rounded-lg px-4 w-full sm:w-80 h-[48px] text-sm shadow-sm focus:ring-2 focus:ring-blue-400 appearance-none"
-                  value={selectedCountry}
-                  onChange={(e) => setSelectedCountry(e.target.value)}
-                >
-                  <option value="">Select Country</option>
-                  {getUniqueCountries(offers).map((country) => (
-                    <option key={country.value} value={country.value}>
-                      {country.label}
-                    </option>
-                  ))}
-                </select>
-              </>
-            )}
-          </div>
-
-          {/* Buttons First on md, Below Everything on lg */}
-          <div className="flex flex-wrap gap-4 mt-4 md:order-1 lg:order-2">
-            <button
-              className="bg-gradient-to-r from-[#E1D7C6] to-[#295F98] text-white px-4 py-2 rounded-lg h-[48px] text-sm shadow-md w-full sm:w-auto"
-              onClick={() => setSearchQuery("")}
-            >
-              Clear Search
-            </button>
-
-            {activeTab === "offers" && (
+            {/* Buttons First on md, Below Everything on lg */}
+            <div className="flex flex-wrap gap-4 mt-4 md:order-1 lg:order-2">
               <button
-                className="bg-gradient-to-r from-[#E1D7C6] to-[#FF5733] text-white px-4 py-2 rounded-lg h-[48px] text-sm shadow-md w-full sm:w-auto"
-                onClick={() => {
-                  setSelectedNetwork("");
-                  setSelectedCountry("");
-                }}
+                className="bg-gradient-to-r from-[#E1D7C6] to-[#295F98] text-white px-4 py-2 rounded-lg h-[48px] text-sm shadow-md w-full sm:w-auto"
+                onClick={() => setSearchQuery("")}
               >
-                Clear Filters
+                Clear Search
               </button>
-            )}
+
+              {activeTab === "offers" && (
+                <button
+                  className="bg-gradient-to-r from-[#E1D7C6] to-[#FF5733] text-white px-4 py-2 rounded-lg h-[48px] text-sm shadow-md w-full sm:w-auto"
+                  onClick={() => {
+                    setSelectedNetwork("");
+                    setSelectedCountry("");
+                  }}
+                >
+                  Clear Filters
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Right Side - Image (Moves Below on md, Right on lg) */}
+          <div className="w-full lg:w-auto flex justify-start lg:justify-end md:order-2 lg:order-1">
+            <img
+              src="https://www.offertrunk.com/images/banners/12.png"
+              alt="Offer 1"
+              className="w-full md:w-[350px] sm:w-[280px] h-auto rounded-md shadow-lg"
+            />
           </div>
         </div>
 
-        {/* Right Side - Image (Moves Below on md, Right on lg) */}
-        <div className="w-full lg:w-auto flex justify-start lg:justify-end md:order-2 lg:order-1">
-          <img
-            src="https://www.offertrunk.com/images/banners/12.png"
-            alt="Offer 1"
-            className="w-full md:w-[350px] sm:w-[280px] h-auto rounded-md shadow-lg"
-          />
+        {/* Image Section Positioned Below Buttons */}
+        <div className="flex flex-wrap justify-start gap-4 mt-6">
+          {imageUrls.map((image, index) => (
+            <img
+              key={index}
+              src={image.src}
+              alt={image.alt}
+              className="w-full sm:w-72 h-22 object-cover cursor-pointer rounded-md shadow-lg hover:scale-105 transition-transform duration-300"
+            />
+          ))}
         </div>
       </div>
-
-      {/* Image Section Positioned Below Buttons */}
-      <div className="flex flex-wrap justify-start gap-4 mt-6">
-        {imageUrls.map((image, index) => (
-          <img
-            key={index}
-            src={image.src}
-            alt={image.alt}
-            className="w-full sm:w-72 h-22 object-cover cursor-pointer rounded-md shadow-lg hover:scale-105 transition-transform duration-300"
-          />
-        ))}
-      </div>
-    </div>
+    </>
   );
 };
 
