@@ -101,62 +101,61 @@ const DataTable = ({
 
       <div className="p-4 flex flex-col lg:flex-row gap-4">
         <div className="w-full lg:w-3/4">
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse mt-4 shadow-lg rounded-lg overflow-hidden">
-              <thead className="bg-gradient-to-r from-[#295F98] to-[#E1D7C6] text-white">
-                <tr>
-                  <th className="border-b-2 p-4 text-lg font-semibold">NAME</th>
-                  {activeTab === "offers" && (
-                    <>
-                      <th className="border-b-2 p-4 text-lg font-semibold">
-                        PAYOUT
-                      </th>
-                      <th className="border-b-2 p-4 text-lg font-semibold">
-                        NETWORK
-                      </th>
-                      <th className="border-b-2 p-4 text-lg font-semibold">
-                        COUNTRY
-                      </th>
-                    </>
-                  )}
-                  {activeTab === "networks" && (
-                    <>
-                      <th className="border-b-2 p-4 text-lg font-semibold">
-                        DESCRIPTION
-                      </th>
-                      <th className="border-b-2 p-4 text-lg font-semibold">
-                        OFFER COUNT
-                      </th>
-                    </>
-                  )}
-                  {activeTab === "traffic" && (
-                    <>
-                      <th className="border-b-2 p-4 text-lg font-semibold">
-                        TYPE
-                      </th>
-                      <th className="border-b-2 p-4 text-lg font-semibold">
-                        MOBILE
-                      </th>
-                      <th className="border-b-2 p-4 text-lg font-semibold">
-                        DESKTOP
-                      </th>
-                      <th className="border-b-2 p-4 text-lg font-semibold">
-                        RETARGETING
-                      </th>
-                      <th className="border-b-2 p-4 text-lg font-semibold">
-                        SELF-SERVE
-                      </th>
-                    </>
-                  )}
-                </tr>
-              </thead>
-              <tbody>
-                {currentData.length > 0 ? (
-                  currentData.map((item, index) => {
-                    const slug = item.name
-                      ? slugify(item.name)
-                      : "default-slug";
-                    return (
+          <div className="p-4">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse mt-4 shadow-lg rounded-lg overflow-hidden">
+                <thead className="bg-gradient-to-r from-[#295F98] to-[#E1D7C6] text-white">
+                  <tr>
+                    <th className="border-b-2 p-4 text-lg font-semibold">
+                      NAME
+                    </th>
+                    {activeTab === "offers" && (
+                      <>
+                        <th className="border-b-2 p-4 text-lg font-semibold">
+                          PAYOUT
+                        </th>
+                        <th className="border-b-2 p-4 text-lg font-semibold">
+                          NETWORK
+                        </th>
+                        <th className="border-b-2 p-4 text-lg font-semibold">
+                          COUNTRY
+                        </th>
+                      </>
+                    )}
+                    {activeTab === "networks" && (
+                      <>
+                        <th className="border-b-2 p-4 text-lg font-semibold">
+                          DESCRIPTION
+                        </th>
+                        <th className="border-b-2 p-4 text-lg font-semibold">
+                          OFFER COUNT
+                        </th>
+                      </>
+                    )}
+                    {activeTab === "traffic" && (
+                      <>
+                        <th className="border-b-2 p-4 text-lg font-semibold">
+                          TYPE
+                        </th>
+                        <th className="border-b-2 p-4 text-lg font-semibold">
+                          MOBILE
+                        </th>
+                        <th className="border-b-2 p-4 text-lg font-semibold">
+                          DESKTOP
+                        </th>
+                        <th className="border-b-2 p-4 text-lg font-semibold">
+                          RETARGETING
+                        </th>
+                        <th className="border-b-2 p-4 text-lg font-semibold">
+                          SELF-SERVE
+                        </th>
+                      </>
+                    )}
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredData.length > 0 ? (
+                    filteredData.map((item, index) => (
                       <tr
                         key={index}
                         className="border-b transition-all duration-300 hover:bg-[#E1D7C6]"
@@ -170,10 +169,7 @@ const DataTable = ({
                                   : activeTab === "networks"
                                   ? "network"
                                   : "traffic"
-                              }/${item.name
-                                .toLowerCase()
-                                .replace(/\s+/g, "-")
-                                .replace(/[^\w-]+/g, "")}`}
+                              }/${slugify(item.name)}`}
                               className="flex items-center w-full hover:underline"
                             >
                               <Image
@@ -200,44 +196,17 @@ const DataTable = ({
                             <span className="text-gray-500">No Name</span>
                           )}
                         </td>
-
                         {activeTab === "offers" && (
                           <>
                             <td className="p-4 text-center">${item.payout}</td>
-                            <td
-                              className="p-4 text-center"
-                              href={`https://${
-                                item.network_name
-                                  ? item.network_name
-                                      .toLowerCase()
-                                      .replace(/\s+/g, "") + ".com"
-                                  : ""
-                              }`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
+                            <td className="p-4 text-center">
                               {item.network_name || "-"}
                             </td>
-                            {/* <td className="p-4 text-center">
-
-                            </td> */}
-
                             <td className="p-4 text-center">
-                              <a
-                                href={`#${
-                                  item.geo
-                                    ? item.geo
-                                        .toLowerCase()
-                                        .replace(/\s+/g, "-")
-                                    : ""
-                                }`}
-                              >
-                                {item.geo || "-"}
-                              </a>
+                              {item.geo || "-"}
                             </td>
                           </>
                         )}
-
                         {activeTab === "networks" && (
                           <>
                             <td className="p-4 text-center">
@@ -268,73 +237,43 @@ const DataTable = ({
                           </>
                         )}
                       </tr>
-                    );
-                  })
-                ) : (
-                  <tr>
-                    <td
-                      colSpan="5"
-                      className="text-center p-4 text-xl font-semibold text-gray-500"
-                    >
-                      No data available
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+                    ))
+                  ) : (
+                    <tr>
+                      <td
+                        colSpan="5"
+                        className="text-center p-4 text-xl font-semibold text-gray-500"
+                      >
+                        No data available
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
 
-          {/* {totalPages > 1 && (
-            <div className="flex justify-center items-center space-x-2 mt-4">
-              <button
-                onClick={() => goToPage(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="px-4 py-2 border rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
-              >
-                <FaAngleLeft />
-              </button>
-              {renderPageNumbers().map((page, index) => (
+            {overallPages > 1 && (
+              <div className="flex justify-center mt-4">
                 <button
-                  key={index}
-                  onClick={() => typeof page === "number" && goToPage(page)}
-                  className={`px-4 py-2 border rounded-lg ${
-                    currentPage === page
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-200 hover:bg-gray-300"
-                  }`}
-                  disabled={page === "..."}
+                  onClick={() => goToNextPage(recentPage - 1)}
+                  disabled={recentPage === 1}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md disabled:bg-gray-300"
                 >
-                  {page}
+                  <FaAngleLeft />
                 </button>
-              ))}
-              <button
-                onClick={() => goToPage(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="px-4 py-2 border rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
-              >
-                <FaAngleRight />
-              </button>
-            </div>
-          )} */}
-          {overallPages > 1 && (
-            <div className="flex justify-center mt-4">
-              <button
-                onClick={() => goToNextPage(recentPage - 1)}
-                disabled={recentPage === 1}
-              >
-                <FaAngleLeft />
-              </button>
-              <span className="mx-2">
-                {recentPage} of {overallPages}
-              </span>
-              <button
-                onClick={() => goToNextPage(recentPage + 1)}
-                disabled={recentPage === overallPages}
-              >
-                <FaAngleRight />
-              </button>
-            </div>
-          )}
+                <span className="mx-2">
+                  Page {recentPage} of {overallPages}
+                </span>
+                <button
+                  onClick={() => goToNextPage(recentPage + 1)}
+                  disabled={recentPage === overallPages}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md disabled:bg-gray-300"
+                >
+                  <FaAngleRight />
+                </button>
+              </div>
+            )}
+          </div>
 
           <div className="flex justify-start items-start w-full mt-10">
             <img
@@ -458,3 +397,38 @@ const DataTable = ({
 };
 
 export default DataTable;
+
+{
+  /* {totalPages > 1 && (
+            <div className="flex justify-center items-center space-x-2 mt-4">
+              <button
+                onClick={() => goToPage(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="px-4 py-2 border rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+              >
+                <FaAngleLeft />
+              </button>
+              {renderPageNumbers().map((page, index) => (
+                <button
+                  key={index}
+                  onClick={() => typeof page === "number" && goToPage(page)}
+                  className={`px-4 py-2 border rounded-lg ${
+                    currentPage === page
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-200 hover:bg-gray-300"
+                  }`}
+                  disabled={page === "..."}
+                >
+                  {page}
+                </button>
+              ))}
+              <button
+                onClick={() => goToPage(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 border rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+              >
+                <FaAngleRight />
+              </button>
+            </div>
+          )} */
+}
