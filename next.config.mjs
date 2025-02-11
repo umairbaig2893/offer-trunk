@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["api.offertrunk.com", "via.placeholder.com"], // Added "via.placeholder.com"
+    domains: ["api.offertrunk.com", "www.offertrunk.com"], // Added "via.placeholder.com"
   },
 };
 

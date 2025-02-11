@@ -1,7 +1,6 @@
 import Navbar from "@/components/Navbar/Navbar";
 import Link from "next/link";
 import Image from "next/image";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import {
   FaFacebookF,
   FaTwitter,
