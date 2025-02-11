@@ -1,109 +1,99 @@
-// pages/index.js
-import { useRouter } from "next/router";
+import Banner from "@/components/Banner/Banner";
+import DataTable from "@/components/DataTable/DataTable";
+import SearchFilters from "@/components/Filter/TabWithFilter";
+import Navbar from "@/components/Navbar/Navbar";
+// import Tabs from "@/components/Tab/Tab";
+import Loader from "@/components/Loader/Loader"; // Import Loader
 import { useState } from "react";
 import Head from "next/head";
-import DataTable from "@/components/DataTable/DataTable";
-import Navbar from "@/components/Navbar/Navbar";
-import Loader from "@/components/Loader/Loader";
+import Tabs from "@/components/Tab/Tab";
 import TabsWithFilters from "@/components/Filter/TabWithFilter";
 
 const API_URLS = {
-  offers: "https://api.offertrunk.com/api/getOffers?limit=1000",
+  offers: "https://api.offertrunk.com/api/getOffers",
   networks: "https://api.offertrunk.com/api/getNetworks",
   trafficSources: "https://api.offertrunk.com/api/getTrafficSources",
 };
 
-const ITEMS_PER_PAGE = 10;
-
-export async function getServerSideProps(context) {
-  const { query } = context;
-  const recentPage = parseInt(query.page) || 1;
-
+// Server-side data fetching
+export async function getServerSideProps() {
   try {
-    // Helper function to fetch data from an API URL
     const fetchData = async (url) => {
-      const response = await fetch(url, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        cache: "no-store",
-      });
-      if (!response.ok) {
-        throw new Error(`API request failed with status: ${response.status}`);
+      try {
+        const response = await fetch(url, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          throw new Error(`API request failed with status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        return result?.data || [];
+      } catch (error) {
+        console.error(`❌ Error fetching data from ${url}:`, error);
+        return [];
       }
-      const result = await response.json();
-      return result?.data || [];
     };
 
-    // Fetch all datasets concurrently
+    // Fetch all data concurrently
     const [offers, networks, trafficSources] = await Promise.all([
       fetchData(API_URLS.offers),
       fetchData(API_URLS.networks),
       fetchData(API_URLS.trafficSources),
     ]);
 
-    // Return the full datasets so we can filter them on the client side.
     return {
-      props: {
-        offers: { fullData: offers },
-        networks: { fullData: networks },
-        trafficSources: { fullData: trafficSources },
-        recentPage,
-      },
+      props: { offers, networks, trafficSources },
     };
   } catch (error) {
     console.error("❌ Error fetching data:", error);
     return {
       props: {
-        offers: { fullData: [] },
-        networks: { fullData: [] },
-        trafficSources: { fullData: [] },
-        recentPage: 1,
+        offers: [],
+        networks: [],
+        trafficSources: [],
+        error: error.message,
       },
     };
   }
 }
 
-export default function Home({ offers, networks, trafficSources, recentPage }) {
+export default function Home({ offers, networks, trafficSources, error }) {
+  // Default tab
   const [searchQuery, setSearchQuery] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // Loader state
   const [selectedNetwork, setSelectedNetwork] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [activeTab, setActiveTab] = useState("offers");
-
-  const router = useRouter();
-
-  // When the tab changes, we simulate a short loader.
   const handleTabChange = (tab) => {
     setLoading(true);
     setActiveTab(tab);
     setTimeout(() => setLoading(false), 500);
   };
 
-  // This function filters the full data based on search and selected filters,
-  // then paginates the result.
   const getFilteredData = () => {
     let data = [];
-    if (activeTab === "offers") data = offers.fullData;
-    else if (activeTab === "networks") data = networks.fullData;
-    else if (activeTab === "traffic") data = trafficSources.fullData;
+    if (activeTab === "offers") data = offers;
+    else if (activeTab === "networks") data = networks;
+    else if (activeTab === "traffic") data = trafficSources;
 
-    // Ensure we are fetching all pages
-    if (data.length === 0) {
-      console.warn("No data available for", activeTab);
+    data = data.filter((item) =>
+      item.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    if (selectedNetwork) {
+      data = data.filter((item) => item.network_name === selectedNetwork);
     }
 
-    const totalItems = data.length;
-    const overallPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+    if (selectedCountry) {
+      data = data.filter((item) => item.geo === selectedCountry);
+    }
 
-    return { paginatedData: data, overallPages }; // Returning full dataset
+    return data;
   };
-
-  // Navigate by updating the page query parameter
-  const goToNextPage = (page) => {
-    router.push(`/?page=${page}`);
-  };
-
-  // Destructure the result of filtering and pagination
 
   return (
     <div className="bg-white min-h-screen">
@@ -116,8 +106,10 @@ export default function Home({ offers, networks, trafficSources, recentPage }) {
       </Head>
 
       <Navbar />
+      {/* <Banner /> */}
 
-      {/* TabsWithFilters should render your site navigation (e.g. switching between offers, networks, and traffic sources) */}
+      {/* <Tabs activeTab={activeTab} setActiveTab={handleTabChange} /> */}
+
       <TabsWithFilters
         activeTab={activeTab}
         setActiveTab={handleTabChange}
@@ -127,19 +119,15 @@ export default function Home({ offers, networks, trafficSources, recentPage }) {
         setSelectedNetwork={setSelectedNetwork}
         selectedCountry={selectedCountry}
         setSelectedCountry={setSelectedCountry}
-        offers={offers.fullData}
+        offers={offers}
       />
 
       {loading ? (
         <Loader />
       ) : (
-        <DataTable
-          activeTab={activeTab}
-          filteredData={paginatedData}
-          recentPage={recentPage}
-          overallPages={overallPages}
-          goToNextPage={goToNextPage}
-        />
+        <>
+          <DataTable activeTab={activeTab} filteredData={getFilteredData()} />
+        </>
       )}
     </div>
   );
