@@ -13,13 +13,16 @@ import {
 const DataTable = ({
   activeTab,
   filteredData,
-  selectedNetwork,
-  setSelectedNetwork,
-  selectedCountry,
-  setSelectedCountry,
-  getUniqueNetworks,
-  getUniqueCountries,
-  offers,
+  recentPage,
+  overallPages,
+  goToNextPage,
+  // selectedNetwork,
+  // setSelectedNetwork,
+  // selectedCountry,
+  // setSelectedCountry,
+  // getUniqueNetworks,
+  // getUniqueCountries,
+  // offers,
 }) => {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
@@ -281,7 +284,7 @@ const DataTable = ({
             </table>
           </div>
 
-          {totalPages > 1 && (
+          {/* {totalPages > 1 && (
             <div className="flex justify-center items-center space-x-2 mt-4">
               <button
                 onClick={() => goToPage(currentPage - 1)}
@@ -308,6 +311,25 @@ const DataTable = ({
                 onClick={() => goToPage(currentPage + 1)}
                 disabled={currentPage === totalPages}
                 className="px-4 py-2 border rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+              >
+                <FaAngleRight />
+              </button>
+            </div>
+          )} */}
+          {totalPages > 1 && (
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={() => goToNextPage(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                <FaAngleLeft />
+              </button>
+              <span className="mx-2">
+                {currentPage} of {totalPages}
+              </span>
+              <button
+                onClick={() => goToNextPage(currentPage + 1)}
+                disabled={currentPage === totalPages}
               >
                 <FaAngleRight />
               </button>

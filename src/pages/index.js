@@ -1,6 +1,7 @@
+// pages/index.js
+import { useRouter } from "next/router";
 import DataTable from "@/components/DataTable/DataTable";
 import Navbar from "@/components/Navbar/Navbar";
-// import Tabs from "@/components/Tab/Tab";
 import Loader from "@/components/Loader/Loader"; // Import Loader
 import { useState } from "react";
 import Head from "next/head";
@@ -12,27 +13,26 @@ const API_URLS = {
   trafficSources: "https://api.offertrunk.com/api/getTrafficSources",
 };
 
-// Server-side data fetching
-export async function getServerSideProps() {
+// Server-side data fetching with pagination support
+export async function getServerSideProps(context) {
+  const { query } = context;
+  const recentPage = parseInt(query.page) || 1;
+  const itemsPerPage = 10;
+
   try {
     const fetchData = async (url) => {
-      try {
-        const response = await fetch(url, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-          cache: "no-store",
-        });
+      const response = await fetch(url, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        cache: "no-store",
+      });
 
-        if (!response.ok) {
-          throw new Error(`API request failed with status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        return result?.data || [];
-      } catch (error) {
-        console.error(`❌ Error fetching data from ${url}:`, error);
-        return [];
+      if (!response.ok) {
+        throw new Error(`API request failed with status: ${response.status}`);
       }
+
+      const result = await response.json();
+      return result?.data || [];
     };
 
     // Fetch all data concurrently
@@ -42,29 +42,48 @@ export async function getServerSideProps() {
       fetchData(API_URLS.trafficSources),
     ]);
 
+    // Paginate data
+    const paginate = (data) => {
+      const totalItems = data.length;
+      const overallPages = Math.ceil(totalItems / itemsPerPage);
+      const indexOfLastItem = recentPage * itemsPerPage;
+      const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+      return {
+        paginatedData: data.slice(indexOfFirstItem, indexOfLastItem),
+        overallPages,
+      };
+    };
+
     return {
-      props: { offers, networks, trafficSources },
+      props: {
+        offers: paginate(offers),
+        networks: paginate(networks),
+        trafficSources: paginate(trafficSources),
+        recentPage,
+      },
     };
   } catch (error) {
     console.error("❌ Error fetching data:", error);
     return {
       props: {
-        offers: [],
-        networks: [],
-        trafficSources: [],
-        error: error.message,
+        offers: { paginatedData: [], overallPages: 1 },
+        networks: { paginatedData: [], overallPages: 1 },
+        trafficSources: { paginatedData: [], overallPages: 1 },
+        recentPage: 1,
       },
     };
   }
 }
 
-export default function Home({ offers, networks, trafficSources, error }) {
-  // Default tab
+export default function Home({ offers, networks, trafficSources, recentPage }) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [loading, setLoading] = useState(false); // Loader state
+  const [loading, setLoading] = useState(false);
   const [selectedNetwork, setSelectedNetwork] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [activeTab, setActiveTab] = useState("offers");
+
+  const router = useRouter();
+
   const handleTabChange = (tab) => {
     setLoading(true);
     setActiveTab(tab);
@@ -73,9 +92,9 @@ export default function Home({ offers, networks, trafficSources, error }) {
 
   const getFilteredData = () => {
     let data = [];
-    if (activeTab === "offers") data = offers;
-    else if (activeTab === "networks") data = networks;
-    else if (activeTab === "traffic") data = trafficSources;
+    if (activeTab === "offers") data = offers.paginatedData;
+    else if (activeTab === "networks") data = networks.paginatedData;
+    else if (activeTab === "traffic") data = trafficSources.paginatedData;
 
     data = data.filter((item) =>
       item.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -92,6 +111,10 @@ export default function Home({ offers, networks, trafficSources, error }) {
     return data;
   };
 
+  const goToNextPage = (page) => {
+    router.push(`/?page=${page}`);
+  };
+
   return (
     <div className="bg-white min-h-screen">
       <Head>
@@ -103,9 +126,6 @@ export default function Home({ offers, networks, trafficSources, error }) {
       </Head>
 
       <Navbar />
-      {/* <Banner /> */}
-
-      {/* <Tabs activeTab={activeTab} setActiveTab={handleTabChange} /> */}
 
       <TabsWithFilters
         activeTab={activeTab}
@@ -116,14 +136,26 @@ export default function Home({ offers, networks, trafficSources, error }) {
         setSelectedNetwork={setSelectedNetwork}
         selectedCountry={selectedCountry}
         setSelectedCountry={setSelectedCountry}
-        offers={offers}
+        offers={offers.paginatedData}
       />
 
       {loading ? (
         <Loader />
       ) : (
         <>
-          <DataTable activeTab={activeTab} filteredData={getFilteredData()} />
+          <DataTable
+            activeTab={activeTab}
+            filteredData={getFilteredData()}
+            recentPage={recentPage}
+            overallPages={
+              activeTab === "offers"
+                ? offers.overallPages
+                : activeTab === "networks"
+                ? networks.overallPages
+                : trafficSources.overallPages
+            }
+            goToNextPage={goToNextPage}
+          />
         </>
       )}
     </div>
