@@ -42,23 +42,12 @@ export async function getServerSideProps(context) {
       fetchData(API_URLS.trafficSources),
     ]);
 
-    // Paginate data
-    const paginate = (data) => {
-      const totalItems = data.length;
-      const overallPages = Math.ceil(totalItems / itemsPerPage);
-      const indexOfLastItem = recentPage * itemsPerPage;
-      const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-      return {
-        paginatedData: data.slice(indexOfFirstItem, indexOfLastItem),
-        overallPages,
-      };
-    };
-
+    // Return full data for filtering later
     return {
       props: {
-        offers: paginate(offers),
-        networks: paginate(networks),
-        trafficSources: paginate(trafficSources),
+        offers: { fullData: offers },
+        networks: { fullData: networks },
+        trafficSources: { fullData: trafficSources },
         recentPage,
       },
     };
@@ -66,9 +55,9 @@ export async function getServerSideProps(context) {
     console.error("❌ Error fetching data:", error);
     return {
       props: {
-        offers: { paginatedData: [], overallPages: 1 },
-        networks: { paginatedData: [], overallPages: 1 },
-        trafficSources: { paginatedData: [], overallPages: 1 },
+        offers: { fullData: [] },
+        networks: { fullData: [] },
+        trafficSources: { fullData: [] },
         recentPage: 1,
       },
     };
