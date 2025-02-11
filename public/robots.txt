@@ -1,0 +1,3 @@
+User-agent: *
+Sitemap: https://offer-trunk.vercel.app/sitemap.xml
+Disallow:
