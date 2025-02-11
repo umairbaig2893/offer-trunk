@@ -5,12 +5,17 @@ export default async function handler(req, res) {
     trafficSources: "https://api.offertrunk.com/api/getTrafficSources",
   };
 
-  // Fetch all data
+  // Fetch ALL data (no pagination)
   const fetchData = async (url) => {
-    const response = await fetch(url);
-    if (!response.ok) return [];
-    const data = await response.json();
-    return data?.data || [];
+    try {
+      const response = await fetch(url);
+      if (!response.ok) return [];
+      const data = await response.json();
+      return data?.data || [];
+    } catch (error) {
+      console.error(`Error fetching ${url}:`, error);
+      return [];
+    }
   };
 
   const [offers, networks, trafficSources] = await Promise.all([
@@ -19,7 +24,7 @@ export default async function handler(req, res) {
     fetchData(API_URLS.trafficSources),
   ]);
 
-  // Function to create URLs
+  // Function to create XML URLs
   const createUrl = (slug, type) => {
     return `<url>
         <loc>https://offer-trunk.vercel.app/${type}/${slug}</loc>
@@ -28,7 +33,7 @@ export default async function handler(req, res) {
       </url>`;
   };
 
-  // Generate sitemap XML
+  // Generate full sitemap XML
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
       <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
         <url>
