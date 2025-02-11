@@ -316,20 +316,20 @@ const DataTable = ({
               </button>
             </div>
           )} */}
-          {totalPages > 1 && (
+          {overallPages > 1 && (
             <div className="flex justify-center mt-4">
               <button
-                onClick={() => goToNextPage(currentPage - 1)}
-                disabled={currentPage === 1}
+                onClick={() => goToNextPage(recentPage - 1)}
+                disabled={recentPage === 1}
               >
                 <FaAngleLeft />
               </button>
               <span className="mx-2">
-                {currentPage} of {totalPages}
+                {recentPage} of {overallPages}
               </span>
               <button
-                onClick={() => goToNextPage(currentPage + 1)}
-                disabled={currentPage === totalPages}
+                onClick={() => goToNextPage(recentPage + 1)}
+                disabled={recentPage === overallPages}
               >
                 <FaAngleRight />
               </button>
