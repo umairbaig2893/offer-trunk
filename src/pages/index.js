@@ -8,7 +8,7 @@ import Loader from "@/components/Loader/Loader";
 import TabsWithFilters from "@/components/Filter/TabWithFilter";
 
 const API_URLS = {
-  offers: "https://api.offertrunk.com/api/getOffers",
+  offers: "https://api.offertrunk.com/api/getOffers?limit=1000",
   networks: "https://api.offertrunk.com/api/getNetworks",
   trafficSources: "https://api.offertrunk.com/api/getTrafficSources",
 };
@@ -86,27 +86,20 @@ export default function Home({ offers, networks, trafficSources, recentPage }) {
     if (activeTab === "offers") data = offers.fullData;
     else if (activeTab === "networks") data = networks.fullData;
     else if (activeTab === "traffic") data = trafficSources.fullData;
+    console.log(`Tab: ${activeTab}`);
+    console.log(`Total Items: ${data.length}`);
+    console.log(`Overall Pages: ${overallPages}`);
+    console.log("First few data entries:", data.slice(0, 5));
 
-    // Filter by search query (assuming every item has a "name" field)
-    data = data.filter((item) =>
-      item.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-
-    // Optionally filter by network and country if provided
-    if (selectedNetwork) {
-      data = data.filter((item) => item.network_name === selectedNetwork);
-    }
-    if (selectedCountry) {
-      data = data.filter((item) => item.geo === selectedCountry);
+    // Ensure we are fetching all pages
+    if (data.length === 0) {
+      console.warn("No data available for", activeTab);
     }
 
     const totalItems = data.length;
     const overallPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-    const indexOfLastItem = recentPage * ITEMS_PER_PAGE;
-    const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
-    const paginatedData = data.slice(indexOfFirstItem, indexOfLastItem);
 
-    return { paginatedData, overallPages };
+    return { paginatedData: data, overallPages }; // Returning full dataset
   };
 
   // Navigate by updating the page query parameter
