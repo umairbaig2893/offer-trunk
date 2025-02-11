@@ -92,9 +92,9 @@ export default function Home({ offers, networks, trafficSources, recentPage }) {
 
   const getFilteredData = () => {
     let data = [];
-    if (activeTab === "offers") data = offers.paginatedData;
-    else if (activeTab === "networks") data = networks.paginatedData;
-    else if (activeTab === "traffic") data = trafficSources.paginatedData;
+    if (activeTab === "offers") data = offers.fullData;
+    else if (activeTab === "networks") data = networks.fullData;
+    else if (activeTab === "traffic") data = trafficSources.fullData;
 
     data = data.filter((item) =>
       item.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -108,7 +108,14 @@ export default function Home({ offers, networks, trafficSources, recentPage }) {
       data = data.filter((item) => item.geo === selectedCountry);
     }
 
-    return data;
+    // Paginate after filtering
+    const totalItems = data.length;
+    const overallPages = Math.ceil(totalItems / itemsPerPage);
+    const indexOfLastItem = recentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const paginatedData = data.slice(indexOfFirstItem, indexOfLastItem);
+
+    return { paginatedData, overallPages };
   };
 
   const goToNextPage = (page) => {
