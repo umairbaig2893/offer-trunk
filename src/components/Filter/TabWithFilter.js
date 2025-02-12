@@ -338,7 +338,7 @@ const TabsWithFilters = ({
             {/* Buttons First on md, Below Everything on lg */}
             <div className="flex flex-wrap gap-4 mt-4 md:order-1 lg:order-2">
               <button
-                className="bg-gradient-to-r from-[#E1D7C6] to-[#295F98] text-white px-4 py-2 rounded-lg h-[48px] text-sm shadow-md w-full sm:w-auto"
+                className="bg-[#0a64bc] text-white px-4 py-2 rounded-lg h-[48px] text-sm shadow-md w-full sm:w-auto"
                 onClick={() => setSearchQuery("")}
               >
                 Clear Search
@@ -346,7 +346,7 @@ const TabsWithFilters = ({
 
               {activeTab === "offers" && (
                 <button
-                  className="bg-gradient-to-r from-[#E1D7C6] to-[#FF5733] text-white px-4 py-2 rounded-lg h-[48px] text-sm shadow-md w-full sm:w-auto"
+                  className="bg-[#0a64bc] text-white px-4 py-2 rounded-lg h-[48px] text-sm shadow-md w-full sm:w-auto"
                   onClick={() => {
                     setSelectedNetwork("");
                     setSelectedCountry("");

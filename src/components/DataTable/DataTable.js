@@ -100,7 +100,7 @@ const DataTable = ({
         <div className="w-full lg:w-3/4">
           <div className="overflow-x-auto">
             <table className="w-full border-collapse mt-4 shadow-lg rounded-lg overflow-hidden">
-              <thead className="bg-gradient-to-r from-[#295F98] to-[#E1D7C6] text-white">
+              <thead className="bg-[#0a64bc] text-white">
                 <tr>
                   <th className="border-b-2 p-4 text-lg font-semibold">NAME</th>
                   {activeTab === "offers" && (

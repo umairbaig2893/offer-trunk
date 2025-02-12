@@ -103,7 +103,7 @@ const OfferDetails = ({ offer, relatedOffers }) => {
       </Head>
 
       {/* Background */}
-      <div className="min-h-screen bg-gradient-to-r from-[#FAF0E6] to-[#D4E4F7] p-6">
+      <div className="min-h-screen p-6">
         {/* Breadcrumb Navigation */}
         <div className="text-gray-600 text-sm mb-4">
           <Link href="/" className="hover:underline">
@@ -181,10 +181,10 @@ const OfferDetails = ({ offer, relatedOffers }) => {
             <h2 className="text-2xl font-bold text-gray-800 mb-4">
               Other Offers from this Network
             </h2>
-            <div className="overflow-x-auto">
-              <table className="w-full max-w-4xl border-collapse border border-gray-300 sm:w-full">
+            <div className="overflow-x-auto ">
+              <table className="w-full max-w-4xl border-collapse border border-gray-300 sm:w-full ">
                 <thead>
-                  <tr className="bg-gradient-to-r from-[#295F98] to-[#E1D7C6] text-white">
+                  <tr className="bg-[#0a64bc] text-white">
                     <th className="border border-gray-300 p-2 text-left">
                       NAME
                     </th>

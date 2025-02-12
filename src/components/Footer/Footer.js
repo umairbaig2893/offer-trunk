@@ -12,8 +12,8 @@ const Footer = () => {
             alt="Logo"
             className="h-20 w-35 mr-2"
           />
-          <p className="text-sm mt-2">
-            Founded in 2013 by affiliate marketers, OfferTrunk is the internet's
+          <p className="text-sm mt-2 text-white">
+            Founded in 2025 by affiliate marketers, OfferTrunk is the internet's
             best resource for affiliates to find affiliate offers, connect with
             affiliate networks and verify their reputation.
           </p>
@@ -29,7 +29,7 @@ const Footer = () => {
 
         {/* Navigation Links */}
         <div className="w-full md:w-1/5 mb-6 md:mb-0">
-          <h3 className="font-bold text-lg mb-2">Navigation</h3>
+          <h3 className="font-bold text-lg mb-2 text-white">Navigation</h3>
           <ul className="text-sm space-y-2">
             <li>
               <a href="#">Home</a>
@@ -51,7 +51,7 @@ const Footer = () => {
 
         {/* Resources */}
         <div className="w-full md:w-1/5 mb-6 md:mb-0">
-          <h3 className="font-bold text-lg mb-2">Resources</h3>
+          <h3 className="font-bold text-lg mb-2 text-white">Resources</h3>
           <ul className="text-sm space-y-2">
             <li>
               <a href="#">FAQ</a>
@@ -64,7 +64,7 @@ const Footer = () => {
 
         {/* Legal */}
         <div className="w-full md:w-1/5">
-          <h3 className="font-bold text-lg mb-2">Legal</h3>
+          <h3 className="font-bold text-lg mb-2 text-white">Legal</h3>
           <ul className="text-sm space-y-2">
             <li>
               <a href="#">Sitemap</a>
@@ -80,7 +80,7 @@ const Footer = () => {
       </div>
 
       {/* Copyright */}
-      <div className="text-center mt-8 border-t border-gray-700 pt-4 text-sm">
+      <div className="text-center mt-8 border-t border-gray-700 pt-4 text-sm text-white">
         Copyright &copy; 2025 - Mobilogi Technology Pvt Ltd. All rights
         reserved.
       </div>
