@@ -217,6 +217,7 @@
 // export default SearchFilters;
 import { FaSearch } from "react-icons/fa";
 import { COUNTRY_LIST } from "../Helper/countryHellper";
+import Image from "next/image";
 
 // Sample image URLs
 const imageUrls = [
@@ -360,10 +361,14 @@ const TabsWithFilters = ({
 
           {/* Right Side - Image (Moves Below on md, Right on lg) */}
           <div className="w-full lg:w-auto flex justify-start lg:justify-end md:order-2 lg:order-1">
-            <img
+            <Image
               src="https://www.offertrunk.com/images/banners/12.png"
               alt="Offer 1"
+              width={350}
+              height={200}
               className="w-full md:w-[350px] sm:w-[280px] h-auto rounded-md shadow-lg"
+              loading="lazy"
+              priority={false} // Ensures lazy loading for non-critical images
             />
           </div>
         </div>
@@ -371,12 +376,16 @@ const TabsWithFilters = ({
         {/* Image Section Positioned Below Buttons */}
         <div className="flex flex-wrap justify-start gap-4 mt-6">
           {imageUrls.map((image, index) => (
-            <img
-              key={index}
-              src={image.src}
-              alt={image.alt}
-              className="w-full sm:w-72 h-22 object-cover cursor-pointer rounded-md shadow-lg hover:scale-105 transition-transform duration-300"
-            />
+            <div key={index} className="w-full sm:w-72">
+              <Image
+                src={image.src}
+                alt={image.alt}
+                width={288} // Equivalent to sm:w-72 (72 * 4 = 288px)
+                height={88} // Approximate height (adjust as needed)
+                className="w-full sm:w-72 h-auto object-cover cursor-pointer rounded-md shadow-lg hover:scale-105 transition-transform duration-300"
+                loading="lazy" // Ensures better performance
+              />
+            </div>
           ))}
         </div>
       </div>

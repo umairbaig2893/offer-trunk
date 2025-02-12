@@ -4,6 +4,7 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import Image from "next/image";
 import Head from "next/head";
 import Footer from "../Footer/Footer";
+
 import {
   FaFacebookF,
   FaTwitter,
@@ -322,32 +323,41 @@ const DataTable = ({
           )}
 
           <div className="flex justify-start items-start w-full mt-10">
-            <img
+            <Image
               src="https://www.offertrunk.com/images/banners/11.png"
               alt="Offer 1"
+              width={500} // Approximate width (adjust as needed)
+              height={250} // Adjust height proportionally
               className="w-[50%] h-auto"
+              loading="lazy" // Enables lazy loading
             />
           </div>
 
           <div className="flex justify-center items-center gap-6 mt-6 flex-wrap">
-            <img
-              src="https://www.offertrunk.com/images/banners/8.png"
-              alt="Offer 2"
-              width={150}
-              height={90}
-            />
-            <img
-              src="https://www.offertrunk.com/images/banners/9.png"
-              alt="Offer 3"
-              width={150}
-              height={90}
-            />
-            <img
-              src="https://www.offertrunk.com/images/banners/9.png"
-              alt="Offer 3"
-              width={150}
-              height={90}
-            />
+            {[
+              {
+                src: "https://www.offertrunk.com/images/banners/8.png",
+                alt: "Offer 2",
+              },
+              {
+                src: "https://www.offertrunk.com/images/banners/9.png",
+                alt: "Offer 3",
+              },
+              {
+                src: "https://www.offertrunk.com/images/banners/9.png",
+                alt: "Offer 3",
+              },
+            ].map((image, index) => (
+              <Image
+                key={index}
+                src={image.src}
+                alt={image.alt}
+                width={150}
+                height={90}
+                className="rounded-md shadow-lg object-cover"
+                loading="lazy" // Enables lazy loading
+              />
+            ))}
           </div>
         </div>
 
@@ -375,18 +385,15 @@ const DataTable = ({
         </div>
       </div>
       <div className="text-center py-6 mt-10">
+        {/* Logo Image Optimization */}
         <div className="flex justify-center">
-          {/* <img
+          <Image
             src="https://www.offertrunk.com/images/logo.png"
             alt="Offer Trunk Logo"
             width={150}
             height={100}
-          /> */}
-          <img
-            src="https://www.offertrunk.com/images/logo.png"
-            alt="Offer Trunk Logo"
-            width="150"
-            height="100"
+            className="h-auto"
+            loading="lazy"
           />
         </div>
 

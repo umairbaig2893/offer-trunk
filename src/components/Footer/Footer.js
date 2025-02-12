@@ -7,10 +7,13 @@ const Footer = () => {
       <div className="w-full flex flex-wrap justify-between max-w-screen-xl mx-auto pt-10 px-4 md:px-0">
         {/* Left Section: Logo & Description */}
         <div className="w-full md:w-1/3 mb-6 md:mb-0">
-          <img
+          <Image
             src="https://www.offertrunk.com/images/logo.png"
             alt="Logo"
+            width={140} // Approximate width (adjust as needed)
+            height={80} // Approximate height (adjust as needed)
             className="h-20 w-35 mr-2"
+            loading="lazy" // Enables lazy loading
           />
           <p className="text-sm mt-2 text-white">
             Founded in 2025 by affiliate marketers, OfferTrunk is the internet's

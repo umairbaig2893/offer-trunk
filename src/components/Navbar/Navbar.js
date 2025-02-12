@@ -5,6 +5,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import Image from "next/image";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,11 +22,13 @@ const Navbar = () => {
           {/* Logo */}
           <Link href="/">
             <div className="flex items-center cursor-pointer">
-              <img
+              <Image
                 src="https://www.offertrunk.com/images/logo.png"
                 alt="Logo"
+                width={152} // Approximate width (9.5rem = 152px)
+                height={60} // Adjust height proportionally
                 className="h-15 mr-2"
-                style={{ width: "9.5rem" }}
+                loading="lazy" // Enables lazy loading for better performance
               />
             </div>
           </Link>
