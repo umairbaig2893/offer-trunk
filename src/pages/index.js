@@ -125,7 +125,7 @@ export default function Home({ offers, networks, trafficSources, error }) {
           <DataTable activeTab={activeTab} filteredData={getFilteredData()} />
 
           {/* SECTION: Generate All Links for SEO */}
-          <div className="mt-10 px-4">
+          <div className="mt-10 px-4 seo-hidden-links">
             <h2 className="text-2xl font-bold mb-4">All Links for SEO</h2>
 
             {/* Offers Links */}
@@ -167,7 +167,7 @@ export default function Home({ offers, networks, trafficSources, error }) {
             {/* Traffic Sources Links */}
             <section className="mb-6">
               <h3 className="text-xl font-semibold mb-2">Traffic Sources</h3>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3 ">
                 {trafficSources.map((traffic) => (
                   <Link
                     key={traffic.id}

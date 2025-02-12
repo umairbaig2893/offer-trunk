@@ -19,3 +19,12 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+.seo-hidden-links {
+  position: absolute;
+  left: -99999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
