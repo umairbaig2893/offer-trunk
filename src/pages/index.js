@@ -1,13 +1,10 @@
-import Banner from "@/components/Banner/Banner";
-import DataTable from "@/components/DataTable/DataTable";
-import SearchFilters from "@/components/Filter/TabWithFilter";
-import Navbar from "@/components/Navbar/Navbar";
-// import Tabs from "@/components/Tab/Tab";
-import Loader from "@/components/Loader/Loader"; // Import Loader
+import Link from "next/link";
 import { useState } from "react";
 import Head from "next/head";
-import Tabs from "@/components/Tab/Tab";
+import Navbar from "@/components/Navbar/Navbar";
+import DataTable from "@/components/DataTable/DataTable";
 import TabsWithFilters from "@/components/Filter/TabWithFilter";
+import Loader from "@/components/Loader/Loader";
 
 const API_URLS = {
   offers: "https://api.offertrunk.com/api/getOffers",
@@ -62,12 +59,12 @@ export async function getServerSideProps() {
 }
 
 export default function Home({ offers, networks, trafficSources, error }) {
-  // Default tab
   const [searchQuery, setSearchQuery] = useState("");
-  const [loading, setLoading] = useState(false); // Loader state
+  const [loading, setLoading] = useState(false);
   const [selectedNetwork, setSelectedNetwork] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [activeTab, setActiveTab] = useState("offers");
+
   const handleTabChange = (tab) => {
     setLoading(true);
     setActiveTab(tab);
@@ -103,12 +100,11 @@ export default function Home({ offers, networks, trafficSources, error }) {
           name="description"
           content="Find the best offers, networks, and traffic sources with real-time data."
         />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://offer-trunk.vercel.app/" />
       </Head>
 
       <Navbar />
-      {/* <Banner /> */}
-
-      {/* <Tabs activeTab={activeTab} setActiveTab={handleTabChange} /> */}
 
       <TabsWithFilters
         activeTab={activeTab}
@@ -127,6 +123,65 @@ export default function Home({ offers, networks, trafficSources, error }) {
       ) : (
         <>
           <DataTable activeTab={activeTab} filteredData={getFilteredData()} />
+
+          {/* SECTION: Generate All Links for SEO */}
+          <div className="mt-10 px-4">
+            <h2 className="text-2xl font-bold mb-4">All Links for SEO</h2>
+
+            {/* Offers Links */}
+            <section className="mb-6">
+              <h3 className="text-xl font-semibold mb-2">Affiliate Offers</h3>
+              <div className="flex flex-wrap gap-3">
+                {offers.map((offer) => (
+                  <Link
+                    key={offer.id}
+                    href={`/offer/${offer.name
+                      .toLowerCase()
+                      .replace(/\s+/g, "-")}`}
+                    className="text-blue-600 hover:underline text-sm"
+                  >
+                    {offer.name}
+                  </Link>
+                ))}
+              </div>
+            </section>
+
+            {/* Networks Links */}
+            <section className="mb-6">
+              <h3 className="text-xl font-semibold mb-2">Affiliate Networks</h3>
+              <div className="flex flex-wrap gap-3">
+                {networks.map((network) => (
+                  <Link
+                    key={network.id}
+                    href={`/network/${network.name
+                      .toLowerCase()
+                      .replace(/\s+/g, "-")}`}
+                    className="text-blue-600 hover:underline text-sm"
+                  >
+                    {network.name}
+                  </Link>
+                ))}
+              </div>
+            </section>
+
+            {/* Traffic Sources Links */}
+            <section className="mb-6">
+              <h3 className="text-xl font-semibold mb-2">Traffic Sources</h3>
+              <div className="flex flex-wrap gap-3">
+                {trafficSources.map((traffic) => (
+                  <Link
+                    key={traffic.id}
+                    href={`/traffic/${traffic.name
+                      .toLowerCase()
+                      .replace(/\s+/g, "-")}`}
+                    className="text-blue-600 hover:underline text-sm"
+                  >
+                    {traffic.name}
+                  </Link>
+                ))}
+              </div>
+            </section>
+          </div>
         </>
       )}
     </div>
