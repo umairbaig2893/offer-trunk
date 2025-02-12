@@ -55,6 +55,15 @@ const DataTable = ({
     return pages;
   };
 
+  // const slugify = (text) =>
+  //   text
+  //     .toString()
+  //     .toLowerCase()
+  //     .trim()
+  //     .replace(/\s+/g, "-")
+  //     .replace(/[^\w-]+/g, "")
+  //     .replace(/--+/g, "-");
+
   const slugify = (text) =>
     text
       .toString()
@@ -62,7 +71,8 @@ const DataTable = ({
       .trim()
       .replace(/\s+/g, "-")
       .replace(/[^\w-]+/g, "")
-      .replace(/--+/g, "-");
+      .replace(/--+/g, "-")
+      .replace(/^-+|-+$/g, "");
 
   return (
     <>
@@ -167,10 +177,7 @@ const DataTable = ({
                                   : activeTab === "networks"
                                   ? "network"
                                   : "traffic"
-                              }/${item.name
-                                .toLowerCase()
-                                .replace(/\s+/g, "-")
-                                .replace(/[^\w-]+/g, "")}`}
+                              }/${slugify(item.name)}`} // Use the fixed slugify function
                               className="flex items-center w-full hover:underline"
                             >
                               <Image
