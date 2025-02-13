@@ -87,12 +87,15 @@ const Navbar = () => {
             >
               Home
             </Link>
-            <Link
-              href="/auth/login"
+            <button
+              onClick={() => {
+                window.location.href = "https://panel.offertrunk.com";
+              }}
               className="block px-3 py-2 text-white hover:text-black-900"
             >
               Login
-            </Link>
+            </button>
+
             <Link
               href="/auth/register"
               className="block px-3 py-2 text-white hover:text-black-900"

@@ -113,7 +113,9 @@ const DataTable = ({
             <table className="w-full border-collapse mt-4 shadow-lg rounded-lg overflow-hidden">
               <thead className="bg-[#0a64bc] text-white">
                 <tr>
-                  <th className="border-b-2 p-4 text-lg font-semibold">NAME</th>
+                  <th className="border-b-2 p-4 text-lg font-semibold text-start">
+                    NAME
+                  </th>
                   {activeTab === "offers" && (
                     <>
                       <th className="border-b-2 p-4 text-lg font-semibold">
@@ -322,18 +324,18 @@ const DataTable = ({
             </div>
           )}
 
-          <div className="flex justify-start items-start w-full mt-10">
+          {/* <div className="flex justify-start items-start w-full mt-10">
             <Image
               src="https://www.offertrunk.com/images/banners/11.png"
               alt="Offer 1"
-              width={500} // Approximate width (adjust as needed)
-              height={250} // Adjust height proportionally
+              width={500} 
+              height={250} 
               className="w-[50%] h-auto"
-              loading="lazy" // Enables lazy loading
+              loading="lazy" 
             />
-          </div>
+          </div> */}
 
-          <div className="flex justify-center items-center gap-6 mt-6 flex-wrap">
+          <div className="flex justify-center items-center gap-6 mt-8 flex-wrap">
             {[
               {
                 src: "https://www.offertrunk.com/images/banners/8.png",

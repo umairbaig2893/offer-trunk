@@ -59,7 +59,7 @@ const ReviewPage = ({ network }) => {
         <div className="text-center py-6 mt-10">
           <div className="flex justify-center">
             <img
-              src="https://www.offertrunk.com/images/logo.png"
+              src={`https://api.offertrunk.com/images/networks/${network.img}`}
               alt="Offer Trunk Logo"
               width={150}
               height={100}

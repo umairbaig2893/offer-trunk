@@ -1,19 +1,18 @@
-import Image from "next/image";
-import { FaFacebookF, FaYoutube } from "react-icons/fa";
+// import Image from "next/image";
+// import { FaFacebookF, FaYoutube } from "react-icons/fa";
 
 const Footer = () => {
   return (
     <footer className="bg-[#0a64bc] text-black mt-10">
-      <div className="w-full flex flex-wrap justify-between max-w-screen-xl mx-auto pt-10 px-4 md:px-0">
-        {/* Left Section: Logo & Description */}
+      {/* <div className="w-full flex flex-wrap justify-between max-w-screen-xl mx-auto pt-10 px-4 md:px-0">
         <div className="w-full md:w-1/3 mb-6 md:mb-0">
           <Image
             src="https://www.offertrunk.com/images/logo.png"
             alt="Logo"
-            width={140} // Approximate width (adjust as needed)
-            height={80} // Approximate height (adjust as needed)
+            width={140}
+            height={80}
             className="h-20 w-35 mr-2"
-            loading="lazy" // Enables lazy loading
+            loading="lazy"
           />
           <p className="text-sm mt-2 text-white">
             Founded in 2025 by affiliate marketers, OfferTrunk is the internet's
@@ -30,7 +29,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Navigation Links */}
         <div className="w-full md:w-1/5 mb-6 md:mb-0">
           <h3 className="font-bold text-lg mb-2 text-white">Navigation</h3>
           <ul className="text-sm space-y-2">
@@ -52,7 +50,6 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Resources */}
         <div className="w-full md:w-1/5 mb-6 md:mb-0">
           <h3 className="font-bold text-lg mb-2 text-white">Resources</h3>
           <ul className="text-sm space-y-2">
@@ -65,7 +62,6 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Legal */}
         <div className="w-full md:w-1/5">
           <h3 className="font-bold text-lg mb-2 text-white">Legal</h3>
           <ul className="text-sm space-y-2">
@@ -80,10 +76,9 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-      </div>
+      </div> */}
 
-      {/* Copyright */}
-      <div className="text-center mt-8 border-t border-gray-700 pt-4 text-sm text-white">
+      <div className="text-center mt-8 border border-gray-700 pt-4 text-sm text-white p-5">
         Copyright &copy; 2025 - Mobilogi Technology Pvt Ltd. All rights
         reserved.
       </div>

@@ -115,7 +115,7 @@ const NetworkDetails = ({ network, otherNetworks }) => {
         />
       </Head>
 
-      <div className="min-h-screen bg-gradient-to-r from-[#FAF0E6] to-[#D4E4F7] p-6">
+      <div className="min-h-screen  p-6">
         {/* Breadcrumb Navigation */}
         <div className="text-gray-600 text-sm mb-4">
           <Link href="/" className="hover:underline">
@@ -129,10 +129,8 @@ const NetworkDetails = ({ network, otherNetworks }) => {
           /<span className="font-semibold">{network?.name || "Unknown"}</span>
         </div>
 
-        {/* Network Header Section */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           <div className="flex items-center space-x-4">
-            {/* Network Image */}
             {network?.img ? (
               <Image
                 src={`https://api.offertrunk.com/images/networks/${network.img}`}

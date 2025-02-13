@@ -219,7 +219,6 @@ import { FaSearch } from "react-icons/fa";
 import { COUNTRY_LIST } from "../Helper/countryHellper";
 import Image from "next/image";
 
-// Sample image URLs
 const imageUrls = [
   { src: "https://www.offertrunk.com/images/banners/13.png", alt: "Ad 1" },
   { src: "https://www.offertrunk.com/images/banners/16.jpg", alt: "Ad 2" },
@@ -283,16 +282,9 @@ const TabsWithFilters = ({
       </div>
 
       <div className="p-4 bg-white rounded-md">
-        {/* Tabs */}
-
-        {/* Wrapper - Responsive Layout */}
         <div className="flex flex-col md:flex-col lg:flex-row items-center lg:items-start gap-4 mt-4 sm:mt-5">
-          {/* Left Side - Inputs & Image on Desktop */}
-          {/* Wrapper - Responsive Layout */}
           <div className="flex flex-col w-full">
-            {/* Search & Filters (Same Row on lg, Column on md) */}
             <div className="flex flex-wrap items-center gap-4 justify-start sm:justify-start w-full">
-              {/* Search Input */}
               <div className="relative w-full sm:w-80">
                 <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
                 <input
@@ -304,7 +296,6 @@ const TabsWithFilters = ({
                 />
               </div>
 
-              {/* Filters (only for Offers Tab) */}
               {activeTab === "offers" && (
                 <>
                   <select
@@ -336,7 +327,6 @@ const TabsWithFilters = ({
               )}
             </div>
 
-            {/* Buttons First on md, Below Everything on lg */}
             <div className="flex flex-wrap gap-4 mt-4 md:order-1 lg:order-2">
               <button
                 className="bg-[#0a64bc] text-white px-4 py-2 rounded-lg h-[48px] text-sm shadow-md w-full sm:w-auto"
@@ -359,7 +349,6 @@ const TabsWithFilters = ({
             </div>
           </div>
 
-          {/* Right Side - Image (Moves Below on md, Right on lg) */}
           <div className="w-full lg:w-auto flex justify-start lg:justify-end md:order-2 lg:order-1">
             <Image
               src="https://www.offertrunk.com/images/banners/12.png"
@@ -368,22 +357,21 @@ const TabsWithFilters = ({
               height={200}
               className="w-full md:w-[350px] sm:w-[280px] h-auto rounded-md shadow-lg"
               loading="lazy"
-              priority={false} // Ensures lazy loading for non-critical images
+              priority={false}
             />
           </div>
         </div>
 
-        {/* Image Section Positioned Below Buttons */}
         <div className="flex flex-wrap justify-start gap-4 mt-6">
           {imageUrls.map((image, index) => (
             <div key={index} className="w-full sm:w-72">
               <Image
                 src={image.src}
                 alt={image.alt}
-                width={288} // Equivalent to sm:w-72 (72 * 4 = 288px)
-                height={88} // Approximate height (adjust as needed)
+                width={288}
+                height={88}
                 className="w-full sm:w-72 h-auto object-cover cursor-pointer rounded-md shadow-lg hover:scale-105 transition-transform duration-300"
-                loading="lazy" // Ensures better performance
+                loading="lazy"
               />
             </div>
           ))}

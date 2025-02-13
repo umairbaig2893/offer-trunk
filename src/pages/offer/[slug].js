@@ -332,6 +332,9 @@ const OfferDetails = ({ offer, relatedOffers }) => {
           <Footer />
         </div> */}
       </div>
+      <div>
+        <Footer />
+      </div>
     </>
   );
 };

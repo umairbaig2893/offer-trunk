@@ -98,7 +98,7 @@ const TrafficDetails = ({
       </Head>
 
       {/* Background Gradient */}
-      <div className="min-h-screen bg-gradient-to-r from-[#FAF0E6] to-[#D4E4F7] p-6">
+      <div className="min-h-screen  p-6">
         {/* Breadcrumb Navigation */}
         <div className="text-gray-600 text-sm mb-4">
           <Link href="/" className="hover:underline">
@@ -191,7 +191,7 @@ const TrafficDetails = ({
           <div className="overflow-x-auto">
             <table className="w-full max-w-4xl border-collapse border border-gray-300 sm:w-full">
               <thead>
-                <tr className="bg-gradient-to-r from-[#295F98] to-[#E1D7C6] text-white">
+                <tr className="bg-[#0a64bc] text-white">
                   <th className="border border-gray-300 p-2 text-left">NAME</th>
                   <th className="border border-gray-300 p-2 text-left">TYPE</th>
                   <th className="border border-gray-300 p-2 text-left">
@@ -342,6 +342,9 @@ const TrafficDetails = ({
         {/* <div>
           <Footer />
         </div> */}
+      </div>
+      <div>
+        <Footer />
       </div>
     </>
   );
