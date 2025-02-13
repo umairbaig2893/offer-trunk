@@ -169,9 +169,9 @@ const DataTable = ({
                     return (
                       <tr
                         key={index}
-                        className="border-b transition-all duration-300 hover:bg-[#E1D7C6]"
+                        className="border-b transition-all duration-300 hover:bg-[#E1D7C6] text-black-500"
                       >
-                        <td className="p-4 flex items-center space-x-2">
+                        <td className="p-4 flex items-center space-x-2 text-black-500">
                           {item.name ? (
                             <Link
                               href={`/${
@@ -204,7 +204,7 @@ const DataTable = ({
                               <span className="truncate">{item.name}</span>
                             </Link>
                           ) : (
-                            <span className="text-white-500">No Name</span>
+                            <span className="text-black-500">No Name</span>
                           )}
                         </td>
 
@@ -281,7 +281,7 @@ const DataTable = ({
                   <tr>
                     <td
                       colSpan="5"
-                      className="text-center p-4 text-xl font-semibold text-white-500"
+                      className="text-center p-4 text-xl font-semibold text-black-500"
                     >
                       No data available
                     </td>
