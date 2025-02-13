@@ -25,8 +25,8 @@ const Navbar = () => {
               <Image
                 src="https://www.offertrunk.com/images/logo.png"
                 alt="Logo"
-                width={152} // Approximate width (9.5rem = 152px)
-                height={60} // Adjust height proportionally
+                width={200} // Approximate width (9.5rem = 152px)
+                height={150} // Adjust height proportionally
                 className="h-15 mr-2"
                 loading="lazy" // Enables lazy loading for better performance
               />
