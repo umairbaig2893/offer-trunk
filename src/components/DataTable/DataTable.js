@@ -180,7 +180,7 @@ const DataTable = ({
                                   : activeTab === "networks"
                                   ? "network"
                                   : "traffic"
-                              }/${slugify(item.name)}`} // Use the fixed slugify function
+                              }/${slugify(item.name)}`}
                               className="flex items-center w-full hover:underline"
                             >
                               <Image
@@ -204,7 +204,7 @@ const DataTable = ({
                               <span className="truncate">{item.name}</span>
                             </Link>
                           ) : (
-                            <span className="text-gray-500">No Name</span>
+                            <span className="text-white-500">No Name</span>
                           )}
                         </td>
 
@@ -281,7 +281,7 @@ const DataTable = ({
                   <tr>
                     <td
                       colSpan="5"
-                      className="text-center p-4 text-xl font-semibold text-gray-500"
+                      className="text-center p-4 text-xl font-semibold text-white-500"
                     >
                       No data available
                     </td>
@@ -357,7 +357,7 @@ const DataTable = ({
                 width={150}
                 height={90}
                 className="rounded-md shadow-lg object-cover"
-                loading="lazy" // Enables lazy loading
+                loading="lazy"
               />
             ))}
           </div>
@@ -390,10 +390,10 @@ const DataTable = ({
         {/* Logo Image Optimization */}
         <div className="flex justify-center">
           <Image
-            src="https://www.offertrunk.com/images/logo.png"
+            src="/assets/offer-trunk-logo-1.png"
             alt="Offer Trunk Logo"
-            width={150}
-            height={100}
+            width={175}
+            height={120}
             className="h-auto"
             loading="lazy"
           />
