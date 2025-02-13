@@ -226,7 +226,7 @@ export default function Register() {
           </form>
 
           {/* Google Sign-Up */}
-          <div className="mt-4">
+          <div className="mt-4 hidden">
             <button
               onClick={handleGoogleSignUp}
               className="w-full flex items-center justify-center border py-3 rounded-lg hover:bg-gray-100 transition"
