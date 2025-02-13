@@ -42,7 +42,7 @@ const ReviewPage = ({ network }) => {
 
             {network.img && (
               <Image
-                src={`https://api.offertrunk.com/images/${network.img}`}
+                src={`https://api.offertrunk.com/images/networks/${network.img}`}
                 alt={network.name}
                 width={150}
                 height={150}
@@ -57,14 +57,14 @@ const ReviewPage = ({ network }) => {
           </div>
         </div>
         <div className="text-center py-6 mt-10">
-          <div className="flex justify-center">
+          {/* <div className="flex justify-center">
             <img
               src={`https://api.offertrunk.com/images/networks/${network.img}`}
               alt="Offer Trunk Logo"
               width={150}
               height={100}
             />
-          </div>
+          </div> */}
 
           {/* Social Media Links */}
           <div className="flex justify-center space-x-4 mt-4 text-blue-600">
