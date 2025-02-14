@@ -52,7 +52,7 @@ export default function Register() {
         }
 
         setTimeout(() => {
-          router.push("/verify-otp"); // Redirect to OTP verification page
+          router.push("/verify-otp");
         }, 2000);
       } else {
         setMessage({

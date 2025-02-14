@@ -364,25 +364,38 @@ const DataTable = ({
         </div>
 
         <div className="w-full lg:w-1/4 flex flex-col items-center gap-4">
-          <img
-            src="https://www.offertrunk.com/images/banners/2.jpg"
-            alt="Ad Banner"
-            className="w-[200px] h-auto object-cover rounded-md"
+          <Image
+            src="/assets/2.jpg" // Leading slash for the path to the public folder
+            alt="Offer Trunk Logo"
+            className="rounded-md object-cover"
+            width={200}
+            height={150}
+            loading="lazy"
           />
-          <img
-            src="https://www.offertrunk.com/images/banners/3.gif"
-            alt="Ad Banner"
-            className="w-[200px] h-auto object-cover rounded-md"
+
+          <Image
+            src="/assets/3.gif"
+            alt="Offer Trunk Logo"
+            className="rounded-md object-cover"
+            width={200}
+            height={150}
+            loading="lazy"
           />
-          <img
-            src="https://www.offertrunk.com/images/banners/4.jpg"
-            alt="Ad Banner"
-            className="w-[200px] h-auto object-cover rounded-md"
+          <Image
+            src="/assets/4.jpg"
+            alt="Offer Trunk Logo"
+            className="rounded-md object-cover"
+            width={200}
+            height={150}
+            loading="lazy"
           />
-          <img
-            src=" https://www.offertrunk.com/images/banners/5.jpg"
-            alt="Ad Banner"
-            className="w-[200px] h-auto object-cover rounded-md"
+          <Image
+            src="/assets/5.jpg"
+            alt="Offer Trunk Logo"
+            className="rounded-md object-cover"
+            width={200}
+            height={150}
+            loading="lazy"
           />
         </div>
       </div>
@@ -392,10 +405,11 @@ const DataTable = ({
           <Image
             src="/assets/offer-trunk-logo-1.png"
             alt="Offer Trunk Logo"
+            className="h-auto"
+            // loading="lazy"
+            priority
             width={175}
             height={120}
-            className="h-auto"
-            loading="lazy"
           />
         </div>
 

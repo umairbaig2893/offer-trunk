@@ -20,7 +20,7 @@ const Navbar = () => {
         {/* Logo & Toggle Button Container */}
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/">
+          <Link href="/" rel="preload">
             <div className="flex items-center cursor-pointer">
               <Image
                 src="https://www.offertrunk.com/images/logo.png"
@@ -28,7 +28,8 @@ const Navbar = () => {
                 width={200} // Approximate width (9.5rem = 152px)
                 height={150} // Adjust height proportionally
                 className="h-15 mr-2"
-                loading="lazy" // Enables lazy loading for better performance
+                // loading="lazy"
+                priority
               />
             </div>
           </Link>

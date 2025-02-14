@@ -1,9 +1,16 @@
 import Link from "next/link";
 import { useState } from "react";
 import Head from "next/head";
+import dynamic from "next/dynamic";
+import { LRUCache } from "lru-cache";
 import Navbar from "@/components/Navbar/Navbar";
-import DataTable from "@/components/DataTable/DataTable";
-import TabsWithFilters from "@/components/Filter/TabWithFilter";
+const TabsWithFilters = dynamic(
+  () => import("@/components/Filter/TabWithFilter"),
+  { ssr: false }
+);
+const DataTable = dynamic(() => import("@/components/DataTable/DataTable"), {
+  ssr: false,
+});
 import Loader from "@/components/Loader/Loader";
 
 const API_URLS = {
@@ -12,27 +19,88 @@ const API_URLS = {
   trafficSources: "https://api.offertrunk.com/api/getTrafficSources",
 };
 
+const cache = new LRUCache({
+  max: 100, // Maximum number of items in the cache
+  ttl: 1000 * 60 * 10, // Time to live in milliseconds (10 minutes)
+});
+
 // Server-side data fetching
+// export async function getServerSideProps() {
+//   try {
+//     const fetchData = async (url) => {
+//       try {
+//         // const response = await fetch(url, {
+//         //   method: "GET",
+//         //   headers: { "Content-Type": "application/json" },
+//         //   cache: "no-store",
+//         // });
+//         const response = await fetch(url, {
+//           method: "GET",
+//           headers: {
+//             "Content-Type": "application/json",
+//             "Cache-Control": "s-maxage=3600, stale-while-revalidate=600",
+//           },
+//         });
+
+//         if (!response.ok) {
+//           throw new Error(`API request failed with status: ${response.status}`);
+//         }
+
+//         const result = await response.json();
+//         return result?.data || [];
+//       } catch (error) {
+//         console.error(`❌ Error fetching data from ${url}:`, error);
+//         return [];
+//       }
+//     };
+
+//     // Fetch all data concurrently
+//     const [offers, networks, trafficSources] = await Promise.all([
+//       fetchData(API_URLS.offers),
+//       fetchData(API_URLS.networks),
+//       fetchData(API_URLS.trafficSources),
+//     ]);
+
+//     return {
+//       props: { offers, networks, trafficSources },
+//     };
+//   } catch (error) {
+//     console.error("❌ Error fetching data:", error);
+//     return {
+//       props: {
+//         offers: [],
+//         networks: [],
+//         trafficSources: [],
+//         error: error.message,
+//       },
+//     };
+//   }
+// }
 export async function getServerSideProps() {
+  const cacheKey = "offers-data";
+
+  // Check if cached data exists
+  const cachedData = cache.get(cacheKey);
+  if (cachedData) {
+    return { props: cachedData };
+  }
+
   try {
     const fetchData = async (url) => {
-      try {
-        const response = await fetch(url, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-          cache: "no-store",
-        });
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "s-maxage=3600, stale-while-revalidate=600",
+        },
+      });
 
-        if (!response.ok) {
-          throw new Error(`API request failed with status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        return result?.data || [];
-      } catch (error) {
-        console.error(`❌ Error fetching data from ${url}:`, error);
-        return [];
+      if (!response.ok) {
+        throw new Error(`API request failed with status: ${response.status}`);
       }
+
+      const result = await response.json();
+      return result?.data || [];
     };
 
     // Fetch all data concurrently
@@ -42,8 +110,13 @@ export async function getServerSideProps() {
       fetchData(API_URLS.trafficSources),
     ]);
 
+    const fetchedData = { offers, networks, trafficSources };
+
+    // Store data in cache
+    cache.set(cacheKey, fetchedData);
+
     return {
-      props: { offers, networks, trafficSources },
+      props: fetchedData,
     };
   } catch (error) {
     console.error("❌ Error fetching data:", error);
