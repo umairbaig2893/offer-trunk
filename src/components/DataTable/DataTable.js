@@ -56,15 +56,6 @@ const DataTable = ({
     return pages;
   };
 
-  // const slugify = (text) =>
-  //   text
-  //     .toString()
-  //     .toLowerCase()
-  //     .trim()
-  //     .replace(/\s+/g, "-")
-  //     .replace(/[^\w-]+/g, "")
-  //     .replace(/--+/g, "-");
-
   const slugify = (text) =>
     text
       .toString()
@@ -365,7 +356,7 @@ const DataTable = ({
 
         <div className="w-full lg:w-1/4 flex flex-col items-center gap-4">
           <Image
-            src="/assets/2.jpg" // Leading slash for the path to the public folder
+            src="/assets/2.jpg"
             alt="Offer Trunk Logo"
             className="rounded-md object-cover"
             width={200}
