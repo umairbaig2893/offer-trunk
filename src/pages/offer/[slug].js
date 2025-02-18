@@ -56,10 +56,10 @@ const slugify = (text) =>
     .toString()
     .toLowerCase()
     .trim()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-+|-+$/g, "");
+    .replace(/[^a-z0-9\s-]/g, "") // Remove special characters
+    .replace(/\s+/g, "-") // Replace spaces with dashes
+    .replace(/-+/g, "-") // Merge multiple dashes
+    .replace(/^-+|-+$/g, ""); // Trim leading/trailing dashes
 
 export async function getServerSideProps(context) {
   const { slug } = context.params;
@@ -75,16 +75,12 @@ export async function getServerSideProps(context) {
     const result = await response.json();
     const offers = result.data || [];
 
-    console.log(" API Offers Count:", offers.length);
-    console.log(" First 5 Offers:", offers.slice(0, 5));
+    // console.log(" API Offers Count:", offers.length);
+    // console.log(" First 5 Offers:", offers.slice(0, 5));
 
     const offer = offers.find((item) => {
-      const formattedSlug = slugify(item.name);
-
-      console.log("🔍 API Offer Slug:", formattedSlug);
-      console.log("🔍 URL Slug:", slug);
-
-      return formattedSlug === slug;
+      const formattedSlug = slugify(item.name).trim();
+      return formattedSlug === slug.trim();
     });
 
     if (!offer) {
@@ -96,16 +92,16 @@ export async function getServerSideProps(context) {
       (item) =>
         item.network_name === offer.network_name && item.name !== offer.name
     );
-    console.log(
-      "🔍 Offers List:",
-      offers.map((item) => item.name)
-    );
-    console.log("🔍 Looking for Slug:", slug);
-    console.log("🔍 Found Offer:", offer);
+    // console.log(
+    //   " Offers List:",
+    //   offers.map((item) => item.name)
+    // );
+    // console.log(" Looking for Slug:", slug);
+    // console.log(" Found Offer:", offer);
 
     return { props: { offer, relatedOffers } };
   } catch (error) {
-    console.error(" Error fetching offer details:", error);
+    // console.error(" Error fetching offer details:", error);
     return { notFound: true };
   }
 }
@@ -274,10 +270,7 @@ const OfferDetails = ({ offer, relatedOffers }) => {
                           />
                         )}
                         <Link
-                          href={`/offer/${relatedOffer.name
-                            .toLowerCase()
-                            .replace(/\s+/g, "-")
-                            .replace(/[^\w-]+/g, "")}`}
+                          href={`/offer/${slugify(relatedOffer.name)}`}
                           legacyBehavior
                         >
                           <a className="hover:underline">{relatedOffer.name}</a>
