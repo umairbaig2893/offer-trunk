@@ -56,14 +56,23 @@ const DataTable = ({
     return pages;
   };
 
+  // const slugify = (text) =>
+  //   text
+  //     .toString()
+  //     .toLowerCase()
+  //     .trim()
+  //     .replace(/\s+/g, "-")
+  //     .replace(/[^\w-]+/g, "")
+  //     .replace(/--+/g, "-")
+  //     .replace(/^-+|-+$/g, "");
   const slugify = (text) =>
     text
       .toString()
       .toLowerCase()
       .trim()
+      .replace(/[^a-z0-9\s-]/g, "")
       .replace(/\s+/g, "-")
-      .replace(/[^\w-]+/g, "")
-      .replace(/--+/g, "-")
+      .replace(/-+/g, "-")
       .replace(/^-+|-+$/g, "");
 
   return (
@@ -155,8 +164,11 @@ const DataTable = ({
                 {currentData.length > 0 ? (
                   currentData.map((item, index) => {
                     const slug = item.name
-                      ? slugify(item.name)
+                      ? slugify(item.name.trim())
                       : "default-slug";
+
+                    // console.log("Generated Slug:", slugify(item.name));
+
                     return (
                       <tr
                         key={index}

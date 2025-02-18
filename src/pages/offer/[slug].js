@@ -12,41 +12,100 @@ import {
 } from "react-icons/fa";
 import Footer from "@/components/Footer/Footer";
 
+// export async function getServerSideProps(context) {
+//   const { slug } = context.params;
+
+//   try {
+//     const response = await fetch(`https://api.offertrunk.com/api/getOffers`);
+//     if (!response.ok) {
+//       return { notFound: true };
+//     }
+
+//     const result = await response.json();
+//     const offers = result.data || [];
+
+//     // Find the current offer
+//     const offer = offers.find((item) => {
+//       const itemSlug = item.name
+//         .toLowerCase()
+//         .trim()
+//         .replace(/\s+/g, "-")
+//         .replace(/[^\w-]+/g, "");
+//       return itemSlug === slug;
+//     });
+
+//     if (!offer) {
+//       return { notFound: true };
+//     }
+
+//     // Get offers from the same network
+//     const relatedOffers = offers.filter(
+//       (item) =>
+//         item.network_name === offer.network_name && item.name !== offer.name
+//     );
+
+//     return { props: { offer, relatedOffers } };
+//   } catch (error) {
+//     console.error("❌ Error fetching offer details:", error);
+//     return { notFound: true };
+//   }
+// }
+
+const slugify = (text) =>
+  text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
 export async function getServerSideProps(context) {
   const { slug } = context.params;
+  console.log(" Received Slug from URL:", slug);
 
   try {
     const response = await fetch(`https://api.offertrunk.com/api/getOffers`);
     if (!response.ok) {
+      console.log(" API Request Failed with Status:", response.status);
       return { notFound: true };
     }
 
     const result = await response.json();
     const offers = result.data || [];
 
-    // Find the current offer
+    console.log(" API Offers Count:", offers.length);
+    console.log(" First 5 Offers:", offers.slice(0, 5));
+
     const offer = offers.find((item) => {
-      const itemSlug = item.name
-        .toLowerCase()
-        .trim()
-        .replace(/\s+/g, "-")
-        .replace(/[^\w-]+/g, "");
-      return itemSlug === slug;
+      const formattedSlug = slugify(item.name);
+
+      console.log("🔍 API Offer Slug:", formattedSlug);
+      console.log("🔍 URL Slug:", slug);
+
+      return formattedSlug === slug;
     });
 
     if (!offer) {
+      console.log("No Offer Found for Slug:", slug);
       return { notFound: true };
     }
 
-    // Get offers from the same network
     const relatedOffers = offers.filter(
       (item) =>
         item.network_name === offer.network_name && item.name !== offer.name
     );
+    console.log(
+      "🔍 Offers List:",
+      offers.map((item) => item.name)
+    );
+    console.log("🔍 Looking for Slug:", slug);
+    console.log("🔍 Found Offer:", offer);
 
     return { props: { offer, relatedOffers } };
   } catch (error) {
-    console.error("❌ Error fetching offer details:", error);
+    console.error(" Error fetching offer details:", error);
     return { notFound: true };
   }
 }
