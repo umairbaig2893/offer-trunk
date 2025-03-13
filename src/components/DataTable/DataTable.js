@@ -56,23 +56,14 @@ const DataTable = ({
     return pages;
   };
 
-  // const slugify = (text) =>
-  //   text
-  //     .toString()
-  //     .toLowerCase()
-  //     .trim()
-  //     .replace(/\s+/g, "-")
-  //     .replace(/[^\w-]+/g, "")
-  //     .replace(/--+/g, "-")
-  //     .replace(/^-+|-+$/g, "");
   const slugify = (text) =>
     text
       .toString()
       .toLowerCase()
       .trim()
-      .replace(/[^a-z0-9\s-]/g, "")
       .replace(/\s+/g, "-")
-      .replace(/-+/g, "-")
+      .replace(/[^\w-]+/g, "")
+      .replace(/--+/g, "-")
       .replace(/^-+|-+$/g, "");
 
   return (
@@ -163,12 +154,15 @@ const DataTable = ({
               <tbody>
                 {currentData.length > 0 ? (
                   currentData.map((item, index) => {
-                    const slug = item.name
-                      ? slugify(item.name.trim())
-                      : "default-slug";
-
-                    // console.log("Generated Slug:", slugify(item.name));
-
+                    // const slug = item.slug
+                    //   ? item.slug
+                    //   : item.name
+                    //   ? slugify(item.name)
+                    //   : "default-slug";
+                    const slug =
+                      item.slug ||
+                      (item.name && slugify(item.name)) ||
+                      "default-slug";
                     return (
                       <tr
                         key={index}
@@ -183,7 +177,7 @@ const DataTable = ({
                                   : activeTab === "networks"
                                   ? "network"
                                   : "traffic"
-                              }/${slugify(item.name)}`}
+                              }/${slug}`}
                               className="flex items-center w-full hover:underline"
                             >
                               <Image
@@ -368,37 +362,32 @@ const DataTable = ({
 
         <div className="w-full lg:w-1/4 flex flex-col items-center gap-4">
           <Image
-            src="/assets/2.jpg"
-            alt="Offer Trunk Logo"
-            className="rounded-md object-cover"
+            src="/assets/side-banner-1.webp"
+            alt="Ad Banner"
             width={200}
-            height={150}
-            loading="lazy"
-          />
-
-          <Image
-            src="/assets/3.gif"
-            alt="Offer Trunk Logo"
-            className="rounded-md object-cover"
-            width={200}
-            height={150}
-            loading="lazy"
+            height={300}
+            className="object-cover rounded-md"
           />
           <Image
-            src="/assets/4.jpg"
-            alt="Offer Trunk Logo"
-            className="rounded-md object-cover"
+            src="/assets/side-banner-2.gif"
+            alt="Ad Banner"
             width={200}
-            height={150}
-            loading="lazy"
+            height={300}
+            className="object-cover rounded-md"
           />
           <Image
-            src="/assets/5.jpg"
-            alt="Offer Trunk Logo"
-            className="rounded-md object-cover"
+            src="/assets/side-banner-3.webp"
+            alt="Ad Banner"
             width={200}
-            height={150}
-            loading="lazy"
+            height={300}
+            className="object-cover rounded-md"
+          />
+          <Image
+            src="/assets/side-banner-4.webp"
+            alt="Ad Banner"
+            width={200}
+            height={300}
+            className="object-cover rounded-md"
           />
         </div>
       </div>
@@ -408,11 +397,10 @@ const DataTable = ({
           <Image
             src="/assets/offer-trunk-logo-1.png"
             alt="Offer Trunk Logo"
-            className="h-auto"
-            // loading="lazy"
-            priority
             width={175}
             height={120}
+            className="h-auto"
+            loading="lazy"
           />
         </div>
 
