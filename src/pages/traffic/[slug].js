@@ -286,7 +286,7 @@ const TrafficDetails = ({
         <div className="text-center py-6 mt-10">
           <div className="flex justify-center">
             <img
-              src="https://www.offertrunk.com/images/logo.png"
+              src="/new-assets/bottomlogo.webp"
               alt="Offer Trunk Logo"
               width={150}
               height={100}
