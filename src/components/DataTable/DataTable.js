@@ -183,7 +183,7 @@ const DataTable = ({
                               <Image
                                 src={
                                   item.img?.startsWith("http")
-                                    ? item.img
+                                    ? `/api/proxy?url=${encodeURIComponent(item.img)}`
                                     : `https://api.offertrunk.com/images/${
                                         activeTab === "offers"
                                           ? "offers"
