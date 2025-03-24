@@ -24,7 +24,7 @@ const DataTable = ({
 }) => {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [isLoading, setIsLoading] = useState(true);
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -182,15 +182,15 @@ const DataTable = ({
                             >
                               <Image
                                 src={
-                                  item.img
-                                    ? `https://api.offertrunk.com/images/${
+                                  item.img?.startsWith("http")
+                                    ? item.img
+                                    : `https://api.offertrunk.com/images/${
                                         activeTab === "offers"
                                           ? "offers"
                                           : activeTab === "networks"
                                           ? "networks"
                                           : "traffic"
                                       }/${item.img}`
-                                    : "https://mir-s3-cdn-cf.behance.net/projects/404/ca3899120572411.Y3JvcCwxNDAwLDEwOTUsMCwxNTI.png"
                                 }
                                 alt={item.name}
                                 width={50}
@@ -198,6 +198,7 @@ const DataTable = ({
                                 className="mr-2 rounded-lg"
                                 loading="lazy"
                               />
+
                               <span className="truncate">{item.name}</span>
                             </Link>
                           ) : (
@@ -220,7 +221,7 @@ const DataTable = ({
                               target="_blank"
                               rel="noopener noreferrer"
                             >
-                              {item.network_name || "-"}
+                              {item.network_name || ""}
                             </td>
                             {/* <td className="p-4 text-center">
 
