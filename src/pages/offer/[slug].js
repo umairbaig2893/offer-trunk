@@ -262,7 +262,7 @@ const OfferDetails = () => {
         <div className="text-center py-6 mt-12">
           <div className="flex justify-center">
             <Image
-              src="/assets/offer-trunk-logo-1.png"
+              src="/new-assets/bottomlogo.webp"
               alt="Offer Trunk Logo"
               width={175}
               height={120}

@@ -5,10 +5,10 @@ import { COUNTRY_LIST } from "../Helper/countryHellper";
 import Image from "next/image";
 
 const imageUrls = [
-  { src: "https://www.offertrunk.com/images/banners/13.png", alt: "Ad 1" },
-  { src: "https://www.offertrunk.com/images/banners/16.jpg", alt: "Ad 2" },
-  { src: "https://www.offertrunk.com/images/banners/13.png", alt: "Ad 3" },
-  { src: "https://www.offertrunk.com/images/banners/16.jpg", alt: "Ad 4" },
+  { src: "/new-assets/banner2.webp", alt: "Ad 1" },
+  { src: "/new-assets/banner3.webp", alt: "Ad 2" },
+  { src: "/new-assets/banner4.webp", alt: "Ad 3" },
+  { src: "/new-assets/banner5.webp", alt: "Ad 4" },
 ];
 
 // Unique networks
@@ -106,7 +106,7 @@ export default function TabsWithFilters({
                   </select>
 
                   {/* If user picks MaxBounty, show special filter */}
-                  {selectedNetwork === "MaxBounty" && (
+                  {/* {selectedNetwork === "MaxBounty" && (
                     <select
                       className="border rounded-lg px-4 w-full sm:w-80 h-[48px] text-sm shadow-sm focus:ring-2 focus:ring-blue-400 appearance-none"
                       value={selectedFilter}
@@ -118,7 +118,7 @@ export default function TabsWithFilters({
                       <option value="top">Top</option>
                       <option value="trending">Trending</option>
                     </select>
-                  )}
+                  )} */}
 
                   {/* Country Filter */}
                   <select
@@ -164,7 +164,7 @@ export default function TabsWithFilters({
           {/* Example Banner (Right Side) */}
           <div className="w-full lg:w-auto flex justify-start lg:justify-end">
             <Image
-              src="https://www.offertrunk.com/images/banners/12.png"
+              src="/new-assets/banner1.webp"
               alt="Offer 1"
               width={350}
               height={200}

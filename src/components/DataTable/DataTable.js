@@ -336,15 +336,15 @@ const DataTable = ({
           <div className="flex justify-center items-center gap-6 mt-8 flex-wrap">
             {[
               {
-                src: "https://www.offertrunk.com/images/banners/8.png",
+                src: "/new-assets/banner6.webp",
                 alt: "Offer 2",
               },
               {
-                src: "https://www.offertrunk.com/images/banners/9.png",
+                src: "/new-assets/banner7.webp",
                 alt: "Offer 3",
               },
               {
-                src: "https://www.offertrunk.com/images/banners/9.png",
+                src: "/new-assets/banner8.webp",
                 alt: "Offer 3",
               },
             ].map((image, index) => (
@@ -363,28 +363,28 @@ const DataTable = ({
 
         <div className="w-full lg:w-1/4 flex flex-col items-center gap-4">
           <Image
-            src="/assets/side-banner-1.webp"
+            src="/new-assets/banner9.webp"
             alt="Ad Banner"
             width={200}
             height={300}
             className="object-cover rounded-md"
           />
           <Image
-            src="/assets/side-banner-2.gif"
+            src="/new-assets/banner10.gif"
             alt="Ad Banner"
             width={200}
             height={300}
             className="object-cover rounded-md"
           />
           <Image
-            src="/assets/side-banner-3.webp"
+            src="/new-assets/banner11.webp"
             alt="Ad Banner"
             width={200}
             height={300}
             className="object-cover rounded-md"
           />
           <Image
-            src="/assets/side-banner-4.webp"
+            src="/new-assets/banner12.webp"
             alt="Ad Banner"
             width={200}
             height={300}
@@ -396,7 +396,7 @@ const DataTable = ({
         {/* Logo Image Optimization */}
         <div className="flex justify-center">
           <Image
-            src="/assets/offer-trunk-logo-1.png"
+            src="/new-assets/bottomlogo.webp"
             alt="Offer Trunk Logo"
             width={175}
             height={120}

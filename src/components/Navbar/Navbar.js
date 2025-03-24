@@ -23,12 +23,11 @@ const Navbar = () => {
           <Link href="/" rel="preload">
             <div className="flex items-center cursor-pointer">
               <Image
-                src="https://www.offertrunk.com/images/logo.png"
+                src="/new-assets/logo.webp"
                 alt="Logo"
-                width={200} // Approximate width (9.5rem = 152px)
-                height={150} // Adjust height proportionally
+                width={200}
+                height={150}
                 className="h-15 mr-2"
-                // loading="lazy"
                 priority
               />
             </div>
