@@ -4,35 +4,27 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import Image from "next/image";
 import Head from "next/head";
 import Footer from "../Footer/Footer";
+
 import {
   FaFacebookF,
   FaTwitter,
   FaLinkedinIn,
   FaInstagram,
 } from "react-icons/fa";
-
-// Helper function to check if a URL is absolute (http or https).
-function isAbsoluteUrl(url = "") {
-  const trimmed = url.trim().toLowerCase();
-  return trimmed.startsWith("http://") || trimmed.startsWith("https://");
-}
-
-// Helper function to slugify text.
-function slugify(text = "") {
-  return text
-    .toString()
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/[^\w-]+/g, "")
-    .replace(/--+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-const DataTable = ({ activeTab, filteredData }) => {
+const DataTable = ({
+  activeTab,
+  filteredData,
+  // selectedNetwork,
+  // setSelectedNetwork,
+  // selectedCountry,
+  // setSelectedCountry,
+  // getUniqueNetworks,
+  // getUniqueCountries,
+  // offers,
+}) => {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [isLoading, setIsLoading] = useState(true);
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -63,6 +55,16 @@ const DataTable = ({ activeTab, filteredData }) => {
     }
     return pages;
   };
+
+  const slugify = (text) =>
+    text
+      .toString()
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, "-")
+      .replace(/[^\w-]+/g, "")
+      .replace(/--+/g, "-")
+      .replace(/^-+|-+$/g, "");
 
   return (
     <>
@@ -152,29 +154,15 @@ const DataTable = ({ activeTab, filteredData }) => {
               <tbody>
                 {currentData.length > 0 ? (
                   currentData.map((item, index) => {
+                    // const slug = item.slug
+                    //   ? item.slug
+                    //   : item.name
+                    //   ? slugify(item.name)
+                    //   : "default-slug";
                     const slug =
                       item.slug ||
                       (item.name && slugify(item.name)) ||
                       "default-slug";
-
-                    // Construct the final image URL
-                    let finalImageUrl = "/placeholder.png"; // fallback if missing
-                    if (item.img) {
-                      if (isAbsoluteUrl(item.img)) {
-                        // If item.img is already an absolute URL (http/https)
-                        finalImageUrl = item.img.trim();
-                      } else {
-                        // Otherwise prepend your custom path
-                        const folder =
-                          activeTab === "offers"
-                            ? "offers"
-                            : activeTab === "networks"
-                            ? "networks"
-                            : "traffic";
-                        finalImageUrl = `https://api.offertrunk.com/images/${folder}/${item.img.trim()}`;
-                      }
-                    }
-
                     return (
                       <tr
                         key={index}
@@ -193,13 +181,24 @@ const DataTable = ({ activeTab, filteredData }) => {
                               className="flex items-center w-full hover:underline"
                             >
                               <Image
-                                src={finalImageUrl}
+                                src={
+                                  item.img?.startsWith("http")
+                                    ? item.img
+                                    : `https://api.offertrunk.com/images/${
+                                        activeTab === "offers"
+                                          ? "offers"
+                                          : activeTab === "networks"
+                                          ? "networks"
+                                          : "traffic"
+                                      }/${item.img}`
+                                }
                                 alt={item.name}
                                 width={50}
                                 height={30}
                                 className="mr-2 rounded-lg"
                                 loading="lazy"
                               />
+
                               <span className="truncate">{item.name}</span>
                             </Link>
                           ) : (
@@ -207,20 +206,43 @@ const DataTable = ({ activeTab, filteredData }) => {
                           )}
                         </td>
 
-                        {/* OFFERS COLUMNS */}
                         {activeTab === "offers" && (
                           <>
                             <td className="p-4 text-center">${item.payout}</td>
-                            <td className="p-4 text-center">
+                            <td
+                              className="p-4 text-center"
+                              href={`https://${
+                                item.network_name
+                                  ? item.network_name
+                                      .toLowerCase()
+                                      .replace(/\s+/g, "") + ".com"
+                                  : ""
+                              }`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
                               {item.network_name || ""}
                             </td>
+                            {/* <td className="p-4 text-center">
+
+                            </td> */}
+
                             <td className="p-4 text-center">
-                              {item.geo || "-"}
+                              <a
+                                href={`#${
+                                  item.geo
+                                    ? item.geo
+                                        .toLowerCase()
+                                        .replace(/\s+/g, "-")
+                                    : ""
+                                }`}
+                              >
+                                {item.geo || "-"}
+                              </a>
                             </td>
                           </>
                         )}
 
-                        {/* NETWORKS COLUMNS */}
                         {activeTab === "networks" && (
                           <>
                             <td className="p-4 text-center">
@@ -231,8 +253,6 @@ const DataTable = ({ activeTab, filteredData }) => {
                             </td>
                           </>
                         )}
-
-                        {/* TRAFFIC COLUMNS */}
                         {activeTab === "traffic" && (
                           <>
                             <td className="p-4 text-center">
@@ -269,7 +289,6 @@ const DataTable = ({ activeTab, filteredData }) => {
             </table>
           </div>
 
-          {/* Pagination */}
           {totalPages > 1 && (
             <div className="flex justify-center items-center space-x-2 mt-4">
               <button
@@ -303,7 +322,17 @@ const DataTable = ({ activeTab, filteredData }) => {
             </div>
           )}
 
-          {/* Example banner images */}
+          {/* <div className="flex justify-start items-start w-full mt-10">
+            <Image
+              src="https://www.offertrunk.com/images/banners/11.png"
+              alt="Offer 1"
+              width={500} 
+              height={250} 
+              className="w-[50%] h-auto"
+              loading="lazy" 
+            />
+          </div> */}
+
           <div className="flex justify-center items-center gap-6 mt-8 flex-wrap">
             {[
               {
@@ -332,7 +361,6 @@ const DataTable = ({ activeTab, filteredData }) => {
           </div>
         </div>
 
-        {/* Right sidebar banners */}
         <div className="w-full lg:w-1/4 flex flex-col items-center gap-4">
           <Image
             src="/assets/side-banner-1.webp"
@@ -364,9 +392,8 @@ const DataTable = ({ activeTab, filteredData }) => {
           />
         </div>
       </div>
-
-      {/* Footer area */}
       <div className="text-center py-6 mt-10">
+        {/* Logo Image Optimization */}
         <div className="flex justify-center">
           <Image
             src="/assets/offer-trunk-logo-1.png"
@@ -377,6 +404,8 @@ const DataTable = ({ activeTab, filteredData }) => {
             loading="lazy"
           />
         </div>
+
+        {/* Social Media Links */}
         <div className="flex justify-center space-x-4 mt-4 text-blue-600">
           <a
             href="https://facebook.com"
@@ -407,6 +436,8 @@ const DataTable = ({ activeTab, filteredData }) => {
             <FaInstagram size={24} />
           </a>
         </div>
+
+        {/* Login & Register Links */}
         <div className="flex justify-center space-x-6 mt-3">
           <Link href="/login" legacyBehavior>
             <a className="text-black hover:text-blue-600 font-semibold">
