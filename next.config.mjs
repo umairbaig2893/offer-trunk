@@ -2,7 +2,12 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["api.offertrunk.com", "www.offertrunk.com"],
+    domains: [
+      "api.offertrunk.com",
+      "www.offertrunk.com",
+      "mir-s3-cdn-cf.behance.net",
+      "maxbounty.com", // <-- Add this
+    ],
   },
   async rewrites() {
     return [

@@ -1,221 +1,6 @@
-// import { FaSearch } from "react-icons/fa";
-// import { COUNTRY_LIST } from "../Helper/countryHellper";
-
-// const getUniqueNetworks = (offers, selectedCountry) => {
-//   const filteredOffers = selectedCountry
-//     ? offers.filter((offer) => offer.country_code === selectedCountry)
-//     : offers;
-
-//   return [...new Set(filteredOffers.map((offer) => offer.network_name))];
-// };
-
-// const getUniqueCountries = (offers = []) => {
-//   const uniqueGeoCodes = [...new Set(offers.map((offer) => offer.geo))];
-
-//   return uniqueGeoCodes
-//     .map((geoCode) => {
-//       const country = COUNTRY_LIST.find((c) => c.code === geoCode);
-//       return country ? { label: country.name, value: country.code } : null;
-//     })
-//     .filter(Boolean);
-// };
-
-// const SearchFilters = ({
-//   searchQuery,
-//   setSearchQuery,
-//   selectedNetwork,
-//   setSelectedNetwork,
-//   selectedCountry,
-//   setSelectedCountry,
-//   offers,
-// }) => {
-//   return (
-//     <div className="p-4">
-//       <div className="flex flex-wrap items-center gap-2 md:gap-4">
-//         {/* Search Input */}
-//         <div className="relative flex-1 min-w-[250px]">
-//           <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
-//           <input
-//             type="text"
-//             placeholder="Search By Name"
-//             className="border rounded p-2 pl-10 w-full h-[42px]"
-//             value={searchQuery}
-//             onChange={(e) => setSearchQuery(e.target.value)}
-//           />
-//         </div>
-
-//         {/* Dropdown Filters */}
-//         <select
-//           className="border rounded p-2 flex-1 min-w-[150px] h-[42px]"
-//           value={selectedNetwork}
-//           onChange={(e) => setSelectedNetwork(e.target.value)}
-//         >
-//           <option value="">Select Networks</option>
-//           {getUniqueNetworks(offers).map((network, index) => (
-//             <option key={index} value={network}>
-//               {network}
-//             </option>
-//           ))}
-//         </select>
-
-//         <select
-//           className="border rounded p-2 flex-1 min-w-[150px] h-[42px]"
-//           value={selectedCountry}
-//           onChange={(e) => setSelectedCountry(e.target.value)}
-//         >
-//           <option value="">Select Country</option>
-//           {getUniqueCountries(offers).map((country) => (
-//             <option key={country.value} value={country.value}>
-//               {country.label}
-//             </option>
-//           ))}
-//         </select>
-
-//         {/* Clear Button */}
-//         <button
-//           className="bg-gradient-to-r from-[#E1D7C6] to-[#295F98] text-white px-4 py-2 rounded h-[42px] flex items-center justify-center"
-//           onClick={() => setSearchQuery("")}
-//         >
-//           Clear Search
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default SearchFilters;
-
-// import { FaSearch } from "react-icons/fa";
-// import { COUNTRY_LIST } from "../Helper/countryHellper";
-
-// const imageUrls = [
-//   { src: "https://www.offertrunk.com/images/banners/13.png", alt: "Ad 1" },
-//   { src: "https://www.offertrunk.com/images/banners/16.jpg", alt: "Ad 2" },
-//   { src: "https://www.offertrunk.com/images/banners/13.png", alt: "Ad 3" },
-//   { src: "https://www.offertrunk.com/images/banners/16.jpg", alt: "Ad 3" },
-//   // Add up to 34 image URLs here
-// ];
-
-// const getUniqueNetworks = (offers, selectedCountry) => {
-//   const filteredOffers = selectedCountry
-//     ? offers.filter((offer) => offer.country_code === selectedCountry)
-//     : offers;
-
-//   return [...new Set(filteredOffers.map((offer) => offer.network_name))];
-// };
-
-// const getUniqueCountries = (offers = []) => {
-//   const uniqueGeoCodes = [...new Set(offers.map((offer) => offer.geo))];
-
-//   return uniqueGeoCodes
-//     .map((geoCode) => {
-//       const country = COUNTRY_LIST.find((c) => c.code === geoCode);
-//       return country ? { label: country.name, value: country.code } : null;
-//     })
-//     .filter(Boolean);
-// };
-
-// const SearchFilters = ({
-//   searchQuery,
-//   setSearchQuery,
-//   selectedNetwork,
-//   setSelectedNetwork,
-//   selectedCountry,
-//   setSelectedCountry,
-//   offers,
-//   activeTab,
-// }) => {
-//   return (
-//     <>
-//       <div className="p-4 flex justify-center">
-//         <div
-//           className={`flex flex-wrap p-4 items-center gap-2 md:gap-4 ${
-//             activeTab !== "offers" ? "max-w-md mx-auto" : "w-full"
-//           } ${["networks", "traffic"].includes(activeTab) ? "" : "shadow-lg"}`}
-//         >
-//           {/* Search Input */}
-//           <div className="relative flex-1 min-w-[250px]">
-//             <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
-//             <input
-//               type="text"
-//               placeholder="Search By Name"
-//               className="border rounded p-2 pl-10 w-full h-[42px]"
-//               value={searchQuery}
-//               onChange={(e) => setSearchQuery(e.target.value)}
-//             />
-//           </div>
-
-//           {/* Dropdown Filters for Offers Tab Only */}
-//           {activeTab === "offers" && (
-//             <>
-//               <select
-//                 className="border rounded p-2 flex-1 min-w-[150px] h-[42px]"
-//                 value={selectedNetwork}
-//                 onChange={(e) => setSelectedNetwork(e.target.value)}
-//               >
-//                 <option value="">Select Networks</option>
-//                 {getUniqueNetworks(offers).map((network, index) => (
-//                   <option key={index} value={network}>
-//                     {network}
-//                   </option>
-//                 ))}
-//               </select>
-
-//               <select
-//                 className="border rounded p-2 flex-1 min-w-[150px] h-[42px]"
-//                 value={selectedCountry}
-//                 onChange={(e) => setSelectedCountry(e.target.value)}
-//               >
-//                 <option value="">Select Country</option>
-//                 {getUniqueCountries(offers).map((country) => (
-//                   <option key={country.value} value={country.value}>
-//                     {country.label}
-//                   </option>
-//                 ))}
-//               </select>
-//             </>
-//           )}
-
-//           {/* Clear Button */}
-//           <button
-//             className="bg-gradient-to-r from-[#E1D7C6] to-[#295F98] text-white px-4 py-2 rounded h-[42px] flex items-center justify-center"
-//             onClick={() => {
-//               setSearchQuery("");
-//               setSelectedNetwork("");
-//               setSelectedCountry("");
-//             }}
-//           >
-//             Clear Search
-//           </button>
-//           {activeTab === "offers" && (
-//             <button
-//               className="bg-gradient-to-r from-[#E1D7C6] to-[#FF5733] text-white px-4 py-2 rounded h-[42px] flex items-center justify-center"
-//               onClick={() => {
-//                 setSelectedNetwork("");
-//                 setSelectedCountry("");
-//               }}
-//             >
-//               Clear Filters
-//             </button>
-//           )}
-//         </div>
-//       </div>
-//       <div className="flex flex-wrap justify-start gap-4 mt-4 px-4">
-//         {imageUrls.map((image, index) => (
-//           <img
-//             key={index}
-//             src={image.src}
-//             alt={image.alt}
-//             className="w-100 h-20 object-cover rounded shadow-md"
-//           />
-//         ))}
-//       </div>
-//     </>
-//   );
-// };
-
-// export default SearchFilters;
+// TabsWithFilters.js
 import { FaSearch } from "react-icons/fa";
+import { useState } from "react";
 import { COUNTRY_LIST } from "../Helper/countryHellper";
 import Image from "next/image";
 
@@ -226,26 +11,27 @@ const imageUrls = [
   { src: "https://www.offertrunk.com/images/banners/16.jpg", alt: "Ad 4" },
 ];
 
-const getUniqueNetworks = (offers, selectedCountry) => {
-  const filteredOffers = selectedCountry
-    ? offers.filter((offer) => offer.country_code === selectedCountry)
-    : offers;
-
-  return [...new Set(filteredOffers.map((offer) => offer.network_name))];
+// Unique networks
+const getUniqueNetworks = (offers) => {
+  const networks = [...new Set(offers.map((o) => o.network_name))];
+  if (!networks.includes("MaxBounty")) {
+    networks.push("MaxBounty");
+  }
+  return networks;
 };
 
+// Unique countries
 const getUniqueCountries = (offers = []) => {
-  const uniqueGeoCodes = [...new Set(offers.map((offer) => offer.geo))];
-
-  return uniqueGeoCodes
-    .map((geoCode) => {
-      const country = COUNTRY_LIST.find((c) => c.code === geoCode);
-      return country ? { label: country.name, value: country.code } : null;
+  const geoCodes = [...new Set(offers.map((o) => o.geo))];
+  return geoCodes
+    .map((geo) => {
+      const c = COUNTRY_LIST.find((x) => x.code === geo);
+      return c ? { label: c.name, value: c.code } : null;
     })
     .filter(Boolean);
 };
 
-const TabsWithFilters = ({
+export default function TabsWithFilters({
   activeTab,
   setActiveTab,
   searchQuery,
@@ -255,9 +41,12 @@ const TabsWithFilters = ({
   selectedCountry,
   setSelectedCountry,
   offers,
-}) => {
+  selectedFilter, // We'll let index.js store this
+  setSelectedFilter, // We'll let index.js store this
+}) {
   return (
     <>
+      {/* Tabs */}
       <div
         className="flex flex-wrap justify-center py-3 items-center bg-[#0a64bc] text-white py-4 shadow-md sm:py-0"
         style={{ fontFamily: "'Open Sans', sans-serif" }}
@@ -281,12 +70,15 @@ const TabsWithFilters = ({
         ))}
       </div>
 
+      {/* Filter UI & Banners */}
       <div className="p-4 bg-white rounded-md">
         <div className="flex flex-col md:flex-col lg:flex-row items-center lg:items-start gap-4 mt-4 sm:mt-5">
           <div className="flex flex-col w-full">
-            <div className="flex flex-wrap items-center gap-4 justify-start sm:justify-start w-full">
+            {/* Search, Network, Country */}
+            <div className="flex flex-wrap items-center gap-4 w-full">
+              {/* Search Box */}
               <div className="relative w-full sm:w-80">
-                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+                <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                 <input
                   type="text"
                   placeholder="Search By Name"
@@ -296,21 +88,39 @@ const TabsWithFilters = ({
                 />
               </div>
 
+              {/* Only show these filters on the 'offers' tab */}
               {activeTab === "offers" && (
                 <>
+                  {/* Networks */}
                   <select
                     className="border rounded-lg px-4 w-full sm:w-80 h-[48px] text-sm shadow-sm focus:ring-2 focus:ring-blue-400 appearance-none"
                     value={selectedNetwork}
                     onChange={(e) => setSelectedNetwork(e.target.value)}
                   >
                     <option value="">Select Networks</option>
-                    {getUniqueNetworks(offers).map((network, index) => (
-                      <option key={index} value={network}>
-                        {network}
+                    {getUniqueNetworks(offers).map((net, idx) => (
+                      <option key={idx} value={net}>
+                        {net}
                       </option>
                     ))}
                   </select>
 
+                  {/* If user picks MaxBounty, show special filter */}
+                  {selectedNetwork === "MaxBounty" && (
+                    <select
+                      className="border rounded-lg px-4 w-full sm:w-80 h-[48px] text-sm shadow-sm focus:ring-2 focus:ring-blue-400 appearance-none"
+                      value={selectedFilter}
+                      onChange={(e) => setSelectedFilter(e.target.value)}
+                    >
+                      <option value="new">New</option>
+                      <option value="popular">Popular</option>
+                      <option value="suggested">Suggested</option>
+                      <option value="top">Top</option>
+                      <option value="trending">Trending</option>
+                    </select>
+                  )}
+
+                  {/* Country Filter */}
                   <select
                     className="border rounded-lg px-4 w-full sm:w-80 h-[48px] text-sm shadow-sm focus:ring-2 focus:ring-blue-400 appearance-none"
                     value={selectedCountry}
@@ -327,9 +137,10 @@ const TabsWithFilters = ({
               )}
             </div>
 
-            <div className="flex flex-wrap gap-4 mt-4 md:order-1 lg:order-2">
+            {/* Buttons to Clear Search/Filters */}
+            <div className="flex flex-wrap gap-4 mt-4">
               <button
-                className="bg-[#0a64bc] text-white px-4 py-2 rounded-lg h-[48px] text-sm shadow-md w-full sm:w-auto"
+                className="bg-[#0a64bc] text-white px-4 py-2 rounded-lg h-[48px] text-sm shadow-md"
                 onClick={() => setSearchQuery("")}
               >
                 Clear Search
@@ -337,10 +148,11 @@ const TabsWithFilters = ({
 
               {activeTab === "offers" && (
                 <button
-                  className="bg-[#0a64bc] text-white px-4 py-2 rounded-lg h-[48px] text-sm shadow-md w-full sm:w-auto"
+                  className="bg-[#0a64bc] text-white px-4 py-2 rounded-lg h-[48px] text-sm shadow-md"
                   onClick={() => {
                     setSelectedNetwork("");
                     setSelectedCountry("");
+                    setSelectedFilter("new");
                   }}
                 >
                   Clear Filters
@@ -349,7 +161,8 @@ const TabsWithFilters = ({
             </div>
           </div>
 
-          <div className="w-full lg:w-auto flex justify-start lg:justify-end md:order-2 lg:order-1">
+          {/* Example Banner (Right Side) */}
+          <div className="w-full lg:w-auto flex justify-start lg:justify-end">
             <Image
               src="https://www.offertrunk.com/images/banners/12.png"
               alt="Offer 1"
@@ -362,12 +175,13 @@ const TabsWithFilters = ({
           </div>
         </div>
 
+        {/* Additional Banners */}
         <div className="flex flex-wrap justify-start gap-4 mt-6">
-          {imageUrls.map((image, index) => (
-            <div key={index} className="w-full sm:w-72">
+          {imageUrls.map((img, idx) => (
+            <div key={idx} className="w-full sm:w-72">
               <Image
-                src={image.src}
-                alt={image.alt}
+                src={img.src}
+                alt={img.alt}
                 width={288}
                 height={88}
                 className="w-full sm:w-72 h-auto object-cover cursor-pointer rounded-md shadow-lg hover:scale-105 transition-transform duration-300"
@@ -376,9 +190,12 @@ const TabsWithFilters = ({
             </div>
           ))}
         </div>
+
+        {/* 
+          NOTE: We no longer render a table here. 
+          That happens only in DataTable. 
+        */}
       </div>
     </>
   );
-};
-
-export default TabsWithFilters;
+}
