@@ -2,11 +2,38 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: [
-      "api.offertrunk.com",
-      "www.offertrunk.com",
-      "mir-s3-cdn-cf.behance.net",
-      "maxbounty.com", // <-- Add this
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'api.offertrunk.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.offertrunk.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'mir-s3-cdn-cf.behance.net',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'maxbounty.com',
+        port: '',
+        pathname: '/**',
+      },
+      // Example of using a wildcard for subdomains under offertrunk.com:
+      {
+        protocol: 'https',
+        hostname: '*.offertrunk.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   async rewrites() {
