@@ -178,7 +178,7 @@ const DataTable = ({
                                   ? "network"
                                   : "traffic"
                               }/${slug}`}
-                              className="flex items-center w-full hover:underline"
+                              className="flex items-center w-full hover:underline text-[black]"
                             >
                               <Image
                                 src={
@@ -199,16 +199,20 @@ const DataTable = ({
                                 loading="lazy"
                               />
 
-                              <span className="truncate">{item.name}</span>
+                              <span className="truncate text-[black]">
+                                {item.name}
+                              </span>
                             </Link>
                           ) : (
-                            <span className="text-black-500">No Name</span>
+                            <span className="text-black-500 ">No Name</span>
                           )}
                         </td>
 
                         {activeTab === "offers" && (
                           <>
-                            <td className="p-4 text-center">${item.payout}</td>
+                            <td className="p-4 text-center text-[black]">
+                              ${item.payout}
+                            </td>
                             <td
                               className="p-4 text-center"
                               href={`https://${
@@ -219,7 +223,7 @@ const DataTable = ({
                                   : ""
                               }`}
                               target="_blank"
-                              rel="noopener noreferrer"
+                              rel="noopener noreferrer text-[black]"
                             >
                               {item.network_name || ""}
                             </td>
@@ -236,6 +240,7 @@ const DataTable = ({
                                         .replace(/\s+/g, "-")
                                     : ""
                                 }`}
+                                className="text-[black]"
                               >
                                 {item.geo || "-"}
                               </a>
@@ -245,10 +250,10 @@ const DataTable = ({
 
                         {activeTab === "networks" && (
                           <>
-                            <td className="p-4 text-center">
+                            <td className="p-4 text-center text-[black]">
                               {item.description || "-"}
                             </td>
-                            <td className="p-4 text-center">
+                            <td className="p-4 text-center text-[black]">
                               {item.offer_count || "0"}
                             </td>
                           </>
