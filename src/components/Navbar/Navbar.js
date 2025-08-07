@@ -32,7 +32,7 @@ const Navbar = () => {
               />
             </div>
           </Link>
-
+             
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
@@ -86,6 +86,12 @@ const Navbar = () => {
               className="block px-3 py-2 text-white hover:text-black-900"
             >
               Home
+            </Link>
+               <Link
+              href="/blogs/post"
+              className="block px-3 py-2 text-white hover:text-black-900"
+            >
+              Blogs
             </Link>
             <button
               onClick={() => {

@@ -115,9 +115,21 @@ export default function Home({ offers, networks, trafficSources, error }) {
         />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://offer-trunk.vercel.app/" />
+
+
+         {/* SEO for Home */}
+        <title>
+          Maximize Your Revenue with Offertrunk Affiliate Marketing and Affiliate Programs
+        </title>
+        <meta
+          name="description"
+          content="Affiliate Marketing and Affiliate Network. Explore top-performing affiliate programs, trusted networks, and valuable resources to accelerate your growth and earnings."
+        />
+        <meta name="keywords" content="affiliate marketing, affiliate programs, affiliate networks, earn money online, digital marketing" />
       </Head>
 
       <Navbar />
+      
 
       <TabsWithFilters
         activeTab={activeTab}
@@ -132,6 +144,7 @@ export default function Home({ offers, networks, trafficSources, error }) {
       />
 
       {loading ? (
+        
         <Loader />
       ) : (
         <>

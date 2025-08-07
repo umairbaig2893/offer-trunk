@@ -47,6 +47,8 @@ export default function TabsWithFilters({
   return (
     <>
       {/* Tabs */}
+      
+      
       <div
         className="flex flex-wrap justify-center py-3 items-center bg-[#0a64bc] text-white py-4 shadow-md sm:py-0"
         style={{ fontFamily: "'Open Sans', sans-serif" }}
@@ -72,8 +74,12 @@ export default function TabsWithFilters({
 
       {/* Filter UI & Banners */}
       <div className="p-4 bg-white rounded-md">
+         <div>
+            <h1 className="text-blue-600  font-bold">Maximize Your Revenue with Offertrunk Affiliate Marketing and Affiliate Programs</h1>
+             </div>
         <div className="flex flex-col md:flex-col lg:flex-row items-center lg:items-start gap-4 mt-4 sm:mt-5">
           <div className="flex flex-col w-full">
+           
             {/* Search, Network, Country */}
             <div className="flex flex-wrap items-center gap-4 w-full">
               {/* Search Box */}
