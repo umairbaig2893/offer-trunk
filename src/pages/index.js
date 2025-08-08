@@ -114,7 +114,7 @@ export default function Home({ offers, networks, trafficSources, error }) {
           content="Find the best offers, networks, and traffic sources with real-time data."
         />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://offer-trunk.vercel.app/" />
+        {/* <link rel="canonical" href="https://offer-trunk.vercel.app/" /> */}
 
 
          {/* SEO for Home */}
